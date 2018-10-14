@@ -26,16 +26,7 @@ POST /api/signup
         "path": "/api/signup"
         }
 
-GET /api/verify?username= &hash=
-
-GET /api/forget?username=
-    -> newPassword
-
-POST /api/changeAvatar
-    token
-    file:
-
-POST /api/changePassword
+PUT /api/changePassword
     token in Authorization header
     {
 	"oldPassword": "aa",
@@ -49,6 +40,21 @@ POST /api/changePassword
     "path": "/api/changePassword"
 	}
 	-> {"result":"success"}
+
+
+    
+            
+
+GET /api/verify?username= &hash=
+
+GET /api/forget?username=
+    -> newPassword
+
+POST /api/changeAvatar
+    token
+    file:
+
+
     
 
 
