@@ -4,8 +4,8 @@ Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: ITitan
 Implementation-Vendor-Id: org.ititandev
 Build-Jdk: 1.8.0_181
-Implementation-URL: http://projects.spring.io/spring-boot/instagram-ba
- ckend-clone/
+Implementation-URL: http://projects.spring.io/spring-boot/threadripper
+ -chat-api/
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
 

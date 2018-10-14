@@ -47,18 +47,14 @@ public class UserDAO {
 				+ "WHERE username = ?";
 		return jdbcTemplate.update(sql, user.getUsername(), user.getEmail(), user.getDisplayName(), username);
 	}
-
-	public int updatePassword(String username, String password) {
-		String sql = "UPDATE user SET password = ? WHERE username = ?";
-		return jdbcTemplate.update(sql, password, username);
+	
+	public String getOldPassword(String username) {
+		String sql = "SELECT password FROM user WHERE username = ?";
+		return jdbcTemplate.queryForList(sql, username).get(0).get("password").toString();
 	}
-
-	public boolean checkPrivilege(String username1, String username2) {
-		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("check_user_to_photo");
-		SqlParameterSource in = new MapSqlParameterSource().addValue("username1", username1).addValue("username2",
-				username2);
-		Map<String, Object> out = jdbcCall.execute(in);
-		return Boolean.valueOf(out.get("output").toString());
+	public int updatePassword(String username, String newPassword) {
+		String sql = "UPDATE user SET password = ? WHERE username = ?";
+		return jdbcTemplate.update(sql, newPassword, username);
 	}
 
 	public boolean checkBlock(String username1, String username2) {

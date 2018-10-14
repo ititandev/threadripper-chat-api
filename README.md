@@ -36,9 +36,20 @@ POST /api/changeAvatar
     file:
 
 POST /api/changePassword
-    token
-    oldPassword
-    newPassword
+    token in Authorization header
+    {
+	"oldPassword": "aa",
+	"newPassword": "a"
+	}
+	-> {
+    "timestamp": 1539520526152,
+    "status": 400,
+    "error": "Bad Request",
+    "message": "Mật khẩu cũ sai",
+    "path": "/api/changePassword"
+	}
+	-> {"result":"success"}
+    
 
 
 GET /api/message/{conversationId}

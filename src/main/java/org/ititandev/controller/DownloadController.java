@@ -59,15 +59,13 @@ public class DownloadController {
 			@PathVariable("ext") String ext) throws IOException {
 		filename += "." + ext;
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		if (accountDAO.checkPrivilege(username, photoDAO.getUsernameWithStoryFilename(filename))) {
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".jpg\"");
-			InputStream inputStream = new FileInputStream(Config.getConfig("story.dir") + File.separator + filename);
-			BufferedImage img = ImageIO.read(inputStream);
-			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-			ImageIO.write(img, "jpg", byteStream);
-			return byteStream.toByteArray();
-		} else
-			return null;
+
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".jpg\"");
+		InputStream inputStream = new FileInputStream(Config.getConfig("story.dir") + File.separator + filename);
+		BufferedImage img = ImageIO.read(inputStream);
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		ImageIO.write(img, "jpg", byteStream);
+		return byteStream.toByteArray();
 	}
 	// @RestController
 	// @RequestMapping("/image")

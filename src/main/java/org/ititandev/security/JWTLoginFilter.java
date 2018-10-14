@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	private TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationServiceImpl();
-	static UserDAO accountDAO = Application.context.getBean("UserDAO", UserDAO.class);
+	static UserDAO userDAO = Application.context.getBean("UserDAO", UserDAO.class);
 
 	public JWTLoginFilter(String url, AuthenticationManager authManager) {
 		super(new AntPathRequestMatcher(url));
@@ -52,14 +52,14 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 			Authentication auth) throws IOException, ServletException {
 		tokenAuthenticationService.addAuthentication(res, auth);
 		String username = auth.getName();
-		String check = accountDAO.checkVerify(username);
+		String check = userDAO.checkVerify(username);
 		if (check.equals("false")) {
 			String body1 = new String(Files.readAllBytes(Paths.get(Config.getConfig("mail.verify.path1"))),
 					StandardCharsets.UTF_8);
 			String body2 = new String(Files.readAllBytes(Paths.get(Config.getConfig("mail.verify.path2"))),
 					StandardCharsets.UTF_8);
-			String verify = accountDAO.getVerifyLink(username);
-			String email = accountDAO.getEmail(username);
+			String verify = userDAO.getVerifyLink(username);
+			String email = userDAO.getEmail(username);
 			MailService.sendMail(email, "Instagram: Verify account", body1 + verify + body2);
 		}
 		res.getOutputStream().print("{\"active\": " + check + "}");

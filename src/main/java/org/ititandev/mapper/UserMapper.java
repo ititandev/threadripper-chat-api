@@ -13,8 +13,6 @@ public class UserMapper implements RowMapper<User>{
 		user.setPassword(rs.getString("password"));
 		user.setDisplayName(rs.getString("displayName"));
 		user.setEmail(rs.getString("email"));
-		user.setAvatarUrl(rs.getString("avatarUrl"));
-		user.setOnline(rs.getBoolean("online"));
 		return user;
 	}
 }

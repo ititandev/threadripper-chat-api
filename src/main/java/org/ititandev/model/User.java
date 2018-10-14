@@ -6,8 +6,6 @@ public class User {
 	String password;
 	String displayName;
 	String email;
-	String avatarUrl;
-	Boolean online;
 
 	public String getUsername() {
 		return username;
@@ -39,22 +37,6 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getAvatarUrl() {
-		return avatarUrl;
-	}
-
-	public void setAvatarUrl(String photoUrl) {
-		this.avatarUrl = photoUrl;
-	}
-
-	public Boolean getOnline() {
-		return online;
-	}
-
-	public void setOnline(Boolean online) {
-		this.online = online;
 	}
 
 }

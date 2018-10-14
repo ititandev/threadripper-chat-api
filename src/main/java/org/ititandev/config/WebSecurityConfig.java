@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -39,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/api/verify/resend/{username}").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/verify/{username}/{hash}").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/forgot/{username}").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/forgotPassword/{username}").permitAll()
 				.antMatchers(HttpMethod.GET, "/email").permitAll()
 				.anyRequest().authenticated()
 				.and()
@@ -51,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource)
 		.usersByUsernameQuery("SELECT username, password, NOT `lock` FROM user WHERE username=?")
-		.authoritiesByUsernameQuery("SELECT username, \"USER_ROLE\" as role FROM user WHERE username=?");
-//		.passwordEncoder(new BCryptPasswordEncoder(16));
+		.authoritiesByUsernameQuery("SELECT username, \"USER_ROLE\" as role FROM user WHERE username=?")
+		.passwordEncoder(new BCryptPasswordEncoder());
 	}
 }
