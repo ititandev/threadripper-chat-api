@@ -9,8 +9,10 @@ import javax.sql.DataSource;
 import org.ititandev.config.Config;
 import org.ititandev.model.Friend;
 import org.ititandev.model.User;
+import org.ititandev.model.UserSearch;
 import org.ititandev.mapper.FriendMapper;
 import org.ititandev.mapper.UserMapper;
+import org.ititandev.mapper.UserSearchMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -18,7 +20,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 public class UserDAO {
-	
+
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 
@@ -41,17 +43,17 @@ public class UserDAO {
 		return jdbcTemplate.update(sql, username, password, email, displayName, hash);
 	}
 
-
 	public int updateInfo(String username, User user) {
 		String sql = "UPDATE user SET username = ?, email = ?, datetime_update = NOW(), name = ? "
 				+ "WHERE username = ?";
 		return jdbcTemplate.update(sql, user.getUsername(), user.getEmail(), user.getDisplayName(), username);
 	}
-	
+
 	public String getOldPassword(String username) {
 		String sql = "SELECT password FROM user WHERE username = ?";
 		return jdbcTemplate.queryForList(sql, username).get(0).get("password").toString();
 	}
+
 	public int updatePassword(String username, String newPassword) {
 		String sql = "UPDATE user SET password = ? WHERE username = ?";
 		return jdbcTemplate.update(sql, newPassword, username);
@@ -98,14 +100,11 @@ public class UserDAO {
 		return jdbcTemplate.queryForList(sql, username).get(0).get("email").toString();
 	}
 
-	public List<User> searchUser(String keyword, String currentUser) {
-		String sql = "SELECT user.username, email, name, "
-				+ "get_avatar(user.username) AS avatar_filename, phone_number "
-				+ "FROM user LEFT JOIN profile ON user.username = profile.username "
-				+ "WHERE (NOT check_block(user.username, ?)) AND (user.username LIKE '%" + keyword + "%' OR "
-				+ "email LIKE '%" + keyword + "%' OR " + "phone_number LIKE '%" + keyword + "%' OR name LIKE '%"
-				+ keyword + "%') LIMIT 0, 20";
-		return jdbcTemplate.query(sql, new Object[] { currentUser }, new UserMapper());
+	public List<UserSearch> searchUser(String keyword) {
+		String sql = "SELECT user.username, displayName, email," + "get_avatar(user.username) AS avatarUrl "
+				+ "FROM user WHERE (user.username LIKE '%" + keyword + "%' OR " + "email LIKE '%" + keyword
+				+ "%' OR displayName LIKE '%" + keyword + "%') LIMIT 0, 20";
+		return jdbcTemplate.query(sql, new Object[] {}, new UserSearchMapper());
 	}
 
 	public Boolean addFriend(String currentUser, String username) {

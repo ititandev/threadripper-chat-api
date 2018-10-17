@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import org.ititandev.config.Config;
 import org.ititandev.dao.UserDAO;
 import org.ititandev.model.Friend;
 import org.ititandev.model.User;
+import org.ititandev.model.UserSearch;
 import org.ititandev.security.TokenHandler;
 import org.ititandev.service.MailService;
 import org.json.JSONException;
@@ -49,25 +51,18 @@ public class UserController {
 		response.setContentType(MediaType.ALL_VALUE);
 		String filename = "threadripper.apk";
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-		// InputStream inputStream = new FileInputStream(Config.getConfig("apk.dir") +
-		// File.separator + filename);
-		// BufferedImage img = ImageIO.read(inputStream);
-		// ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		// ImageIO.write(img, "jpg", byteStream);
-		// return byteStream.toByteArray();
 		return new FileSystemResource(Config.getConfig("apk.dir") + File.separator + filename);
 	}
 
-	@PostMapping("/api/signup")
-	public Object signUp(HttpServletRequest request, HttpServletResponse response, @RequestBody String body)
-			throws IOException, JSONException {
-		JSONObject json = new JSONObject(body);
+	@PostMapping(value = "/api/signup")
+	public Object signUp(HttpServletResponse response, @RequestParam("username") String username,
+			@RequestParam("password") String password, @RequestParam("displayName") String displayName,
+			@RequestParam("email") String email) throws IOException, JSONException {
 		response.setContentType("application/json");
 		int result = 0;
 		try {
-			String password = passwordEncoder.encode(json.getString("password"));
-			result = userDAO.insert(json.getString("username"), password, json.getString("email"),
-					json.getString("displayName"));
+			String encoded_password = passwordEncoder.encode(password);
+			result = userDAO.insert(username, encoded_password, email, displayName);
 		} catch (DuplicateKeyException e) {
 			response.sendError(409, "User đã tồn tại");
 			return null;
@@ -105,22 +100,22 @@ public class UserController {
 	public String verify(@PathVariable("username") String username, @PathVariable("hash") String hash) {
 		return userDAO.verify(username, hash);
 	}
-	
-	@PutMapping("/api/forgotPassword/{username}") 
-	public void forgotPassword(@PathVariable("username") String username){
-//		int leftLimit = 97; // letter 'a'
-//	    int rightLimit = 122; // letter 'z'
-//	    int targetStringLength = 5;
-//	    Random random = new Random();
-//	    StringBuilder buffer = new StringBuilder(targetStringLength);
-//	    for (int i = 0; i < targetStringLength; i++) {
-//	        int randomLimitedInt = leftLimit + (int) 
-//	          (random.nextFloat() * (rightLimit - leftLimit + 1));
-//	        buffer.append((char) randomLimitedInt);
-//	    }
-//	    String generatedString = buffer.toString();
-//	    
-//	    return generatedString;
+
+	@PutMapping("/api/forgotPassword/{username}")
+	public void forgotPassword(@PathVariable("username") String username) {
+		// int leftLimit = 97; // letter 'a'
+		// int rightLimit = 122; // letter 'z'
+		// int targetStringLength = 5;
+		// Random random = new Random();
+		// StringBuilder buffer = new StringBuilder(targetStringLength);
+		// for (int i = 0; i < targetStringLength; i++) {
+		// int randomLimitedInt = leftLimit + (int)
+		// (random.nextFloat() * (rightLimit - leftLimit + 1));
+		// buffer.append((char) randomLimitedInt);
+		// }
+		// String generatedString = buffer.toString();
+		//
+		// return generatedString;
 		userDAO.updatePassword(username, passwordEncoder.encode(username));
 	}
 
@@ -153,11 +148,8 @@ public class UserController {
 	public String refreshToken(HttpServletResponse response, Authentication authentication) throws IOException {
 		String username = authentication.getName();
 		if (userDAO.checkLock(username)) {
-			response.setStatus(401);
-			return "{\r\n" + "    \"timestamp\": 1526663411911,\r\n" + "    \"status\": 401,\r\n"
-					+ "    \"error\": \"Unauthorized\",\r\n"
-					+ "    \"message\": \"Authentication Failed: User is disabled\",\r\n"
-					+ "    \"path\": \"/login\"\r\n" + "}";
+			response.sendError(401, "User is disabled");
+			return null;
 		}
 		TokenHandler tokenHandler = new TokenHandler();
 		String JWT = tokenHandler.build(username);
@@ -175,10 +167,9 @@ public class UserController {
 		return check;
 	}
 
-	@GetMapping(value = "/search/user", params = "search")
-	public List<User> searchUser(@RequestParam("search") String keyword) {
-		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-		return userDAO.searchUser(keyword, currentUser);
+	@GetMapping(value = "/api/search/user", params = "search")
+	public List<UserSearch> searchUser(@RequestParam("search") String keyword) {
+		return userDAO.searchUser(keyword);
 	}
 
 	@GetMapping("/api/addFriend/{username}")

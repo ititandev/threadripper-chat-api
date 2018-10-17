@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/api/forgot/{username}").permitAll()
 				.antMatchers(HttpMethod.PUT, "/api/forgotPassword/{username}").permitAll()
 				.antMatchers(HttpMethod.GET, "/email").permitAll()
-				.anyRequest().authenticated()
+				.anyRequest().permitAll()
 				.and()
 			.addFilterBefore(new JWTLoginFilter("/api/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 			.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

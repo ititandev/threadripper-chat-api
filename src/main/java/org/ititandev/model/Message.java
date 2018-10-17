@@ -50,7 +50,7 @@ public class Message {
 		this.fromUsername = fromUsername;
 	}
 	
-	public class MessageType {
+	public static class MessageType {
 		public static final String JOIN = "JOIN"; 
 		public static final String LEAVE = "LEAVE";
 		public static final String TEXT = "TEXT";
