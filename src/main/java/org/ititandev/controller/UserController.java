@@ -101,7 +101,7 @@ public class UserController {
 		return userDAO.verify(username, hash);
 	}
 
-	@PutMapping("/api/forgotPassword/{username}")
+	@PutMapping("/api/forgot/{username}")
 	public void forgotPassword(@PathVariable("username") String username) {
 		// int leftLimit = 97; // letter 'a'
 		// int rightLimit = 122; // letter 'z'
@@ -126,13 +126,12 @@ public class UserController {
 	}
 
 	@PutMapping("/api/changePassword")
-	public String updatePassword(HttpServletResponse response, @RequestBody String body)
-			throws JSONException, IOException {
+	public String updatePassword(HttpServletResponse response, @RequestParam("newPassword") String newPassword,
+			@RequestParam("oldPassword") String oldPassword) throws JSONException, IOException {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		JSONObject json = new JSONObject(body);
-		String newPassword = passwordEncoder.encode(json.getString("newPassword"));
-		if (!passwordEncoder.matches(json.getString("oldPassword"), userDAO.getOldPassword(username))) {
-			response.sendError(400, "Mật khẩu cũ sai");
+		newPassword = passwordEncoder.encode(newPassword);
+		if (!passwordEncoder.matches(oldPassword, userDAO.getOldPassword(username))) {
+			response.sendError(400, "Mật khẩu cũ không đúng");
 			return null;
 		}
 		int code = userDAO.updatePassword(username, newPassword);
@@ -166,8 +165,13 @@ public class UserController {
 		}
 		return check;
 	}
-
-	@GetMapping(value = "/api/search/user", params = "search")
+	
+	@GetMapping("/api/user")
+	public List<User> getUserList() {
+		return userDAO.getUserList();
+	}
+	
+	@GetMapping("/api/search/user")
 	public List<UserSearch> searchUser(@RequestParam("search") String keyword) {
 		return userDAO.searchUser(keyword);
 	}

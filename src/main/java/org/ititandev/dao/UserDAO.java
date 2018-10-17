@@ -115,8 +115,13 @@ public class UserDAO {
 	}
 
 	public List<Friend> getFriends(String username) {
-		String sql = "SELECT * FROM conversation WHERE username1 = ? OR username2 = ?";
+		String sql = "SELECT * FROM conversation WHERE username = ?";
 		return jdbcTemplate.query(sql, new Object[] { username }, new FriendMapper());
+	}
+
+	public List<User> getUserList() {
+		String sql = "SELECT * FROM user";
+		return jdbcTemplate.query(sql, new Object[] {  }, new UserMapper());
 	}
 
 }
