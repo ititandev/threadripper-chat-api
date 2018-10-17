@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.ititandev.Application;
 import org.ititandev.config.Config;
 import org.ititandev.dao.UserDAO;
-import org.ititandev.model.User;
 import org.ititandev.service.MailService;
 import org.ititandev.service.TokenAuthenticationService;
 import org.ititandev.service.TokenAuthenticationServiceImpl;
@@ -24,8 +23,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -40,11 +37,12 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
 			throws AuthenticationException, IOException, ServletException {
+		// System.out.println("body:\n" + req.getParameter("username") +"\n" +
+		// req.getParameter("password"));
+		// User user = new ObjectMapper().readValue(req.getInputStream(), User.class);
 
-		User user = new ObjectMapper().readValue(req.getInputStream(), User.class);
-
-		return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),
-				user.getPassword(), Collections.emptyList()));
+		return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(
+				req.getParameter("username"), req.getParameter("password"), Collections.emptyList()));
 	}
 
 	@Override
