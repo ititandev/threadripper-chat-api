@@ -171,14 +171,8 @@ public class UserController {
 		return userDAO.getUserList();
 	}
 	
-	@GetMapping("/api/search/user")
+	@GetMapping(value = "/api/user", params = "search")
 	public List<UserSearch> searchUser(@RequestParam("search") String keyword) {
 		return userDAO.searchUser(keyword);
-	}
-
-	@GetMapping("/api/addFriend/{username}")
-	public String follow(@PathVariable("username") String username) {
-		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-		return "{\"follow_status\":\"" + userDAO.addFriend(currentUser, username) + "\"}";
 	}
 }

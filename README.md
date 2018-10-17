@@ -45,22 +45,53 @@ input:  token in Authorization header
 ->  {"result":"success"}
 ```
 
-### `GET /api/user`
+### `GET /api/user` 
+**For test only**
 ```json
-[
-    {
-        "username": "a",
-        "password": "$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.",
-        "displayName": "displayD",
-        "email": "1611985@hcmut.edu.vn"
-    }
-]
+->  [
+        {
+            "username": "a",
+            "password": "$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.",
+            "displayName": "displayD",
+            "email": "1611985@hcmut.edu.vn"
+        }
+    ]
 ```
 
 
+### `GET /api/user?search=`
+```
+input:  token in Authorization header
+```
+```json
+->  [
+        {
+            "username": "huynhha12798",
+            "displayName": "Huynh Ha",
+            "email": "huynhha12798@gmail.com",
+            "avatarUrl": "default.jpg",
+            "online": false
+        }
+    ]
+```
+
 # TO DO:
 
-            
+### `POST /api/conversation`
+```json
+input:  token in Authorization header
+{
+    "listUsername": [
+        "username1",
+        "username2"
+    ]
+}
+```          
+```json
+->  {
+        "conversation_id": "12345"
+    }
+```
 
 GET /api/verify?username= &hash=
 

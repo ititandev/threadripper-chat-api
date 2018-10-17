@@ -28,5 +28,5 @@ public class ChatController {
         System.out.println("/chat.addUser  " + chatMessage.getSender());
         return chatMessage;
     }
-
+    
 }

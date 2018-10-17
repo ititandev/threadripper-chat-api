@@ -101,7 +101,7 @@ public class UserDAO {
 	}
 
 	public List<UserSearch> searchUser(String keyword) {
-		String sql = "SELECT user.username, displayName, email," + "get_avatar(user.username) AS avatarUrl "
+		String sql = "SELECT user.username, displayName, email, " + "get_avatar(user.username) AS avatarUrl, online "
 				+ "FROM user WHERE (user.username LIKE '%" + keyword + "%' OR " + "email LIKE '%" + keyword
 				+ "%' OR displayName LIKE '%" + keyword + "%') LIMIT 0, 20";
 		return jdbcTemplate.query(sql, new Object[] {}, new UserSearchMapper());
