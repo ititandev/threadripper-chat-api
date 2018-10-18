@@ -30,7 +30,7 @@
     }
 ```
 
-### PUT /api/password?oldPassword=&newPassword=
+### `PUT /api/password?oldPassword=&newPassword=`
 ```
 input:  token in Authorization header
 ```
