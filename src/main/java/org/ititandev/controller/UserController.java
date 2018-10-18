@@ -18,7 +18,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.ititandev.Application;
 import org.ititandev.config.Config;
 import org.ititandev.dao.UserDAO;
-import org.ititandev.model.Friend;
+import org.ititandev.model.Conversation;
 import org.ititandev.model.User;
 import org.ititandev.model.UserSearch;
 import org.ititandev.security.TokenHandler;
@@ -64,7 +64,7 @@ public class UserController {
 			String encoded_password = passwordEncoder.encode(password);
 			result = userDAO.insert(username, encoded_password, email, displayName);
 		} catch (DuplicateKeyException e) {
-			response.sendError(409, "User đã tồn tại");
+			response.sendError(409, "Username has been used");
 			return null;
 		}
 		if (result == 1) {
@@ -80,7 +80,7 @@ public class UserController {
 			// body2);
 			return "{\"success\": true}";
 		} else
-			response.sendError(520, "Đã có lỗi xảy ra");
+			response.sendError(520, "Some error has occurred");
 		return null;
 	}
 
@@ -120,25 +120,25 @@ public class UserController {
 	}
 
 	@GetMapping("/api/friends")
-	public List<Friend> account() {
+	public List<Conversation> account() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		return userDAO.getFriends(username);
+		return userDAO.getConversation(username);
 	}
 
-	@PutMapping("/api/changePassword")
+	@PutMapping("/api/password")
 	public String updatePassword(HttpServletResponse response, @RequestParam("newPassword") String newPassword,
 			@RequestParam("oldPassword") String oldPassword) throws JSONException, IOException {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		newPassword = passwordEncoder.encode(newPassword);
 		if (!passwordEncoder.matches(oldPassword, userDAO.getOldPassword(username))) {
-			response.sendError(400, "Mật khẩu cũ không đúng");
+			response.sendError(400, "Incorrect password");
 			return null;
 		}
 		int code = userDAO.updatePassword(username, newPassword);
 		if (code == 1) {
 			return "{\"result\":\"success\"}";
 		} else {
-			response.sendError(520, "Đã có lỗi xảy ra");
+			response.sendError(520, "Some error has occurred");
 			return null;
 		}
 	}
@@ -161,7 +161,7 @@ public class UserController {
 					StandardCharsets.UTF_8);
 			String verify = userDAO.getVerifyLink(username);
 			String email = userDAO.getEmail(username);
-			MailService.sendMail(email, "Instagram: Verify account", body1 + verify + body2);
+			MailService.sendMail(email, "Threadripper: Verify account", body1 + verify + body2);
 		}
 		return check;
 	}

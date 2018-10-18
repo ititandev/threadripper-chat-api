@@ -29,7 +29,8 @@
         "path": "/api/signup"
     }
 ```
-PUT /api/changePassword?oldPassword=&newPassword=
+
+### PUT /api/password?oldPassword=&newPassword=
 ```
 input:  token in Authorization header
 ```
@@ -75,8 +76,6 @@ input:  token in Authorization header
     ]
 ```
 
-# TO DO:
-
 ### `POST /api/conversation`
 ```json
 input:  token in Authorization header
@@ -92,6 +91,13 @@ input:  token in Authorization header
         "conversation_id": "12345"
     }
 ```
+
+
+
+
+# TO DO:
+
+
 
 GET /api/verify?username= &hash=
 

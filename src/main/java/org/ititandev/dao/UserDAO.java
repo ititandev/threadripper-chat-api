@@ -7,10 +7,10 @@ import java.util.Random;
 import javax.sql.DataSource;
 
 import org.ititandev.config.Config;
-import org.ititandev.model.Friend;
+import org.ititandev.model.Conversation;
 import org.ititandev.model.User;
 import org.ititandev.model.UserSearch;
-import org.ititandev.mapper.FriendMapper;
+import org.ititandev.mapper.ConversationMapper;
 import org.ititandev.mapper.UserMapper;
 import org.ititandev.mapper.UserSearchMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -114,9 +114,9 @@ public class UserDAO {
 		return Boolean.valueOf(out.get("output").toString());
 	}
 
-	public List<Friend> getFriends(String username) {
+	public List<Conversation> getConversation(String username) {
 		String sql = "SELECT * FROM conversation WHERE username = ?";
-		return jdbcTemplate.query(sql, new Object[] { username }, new FriendMapper());
+		return jdbcTemplate.query(sql, new Object[] { username }, new ConversationMapper());
 	}
 
 	public List<User> getUserList() {

@@ -18,6 +18,10 @@
       class = "org.ititandev.dao.UserDAO">
       <property name = "dataSource" ref = "dataSource" />    
    </bean>
+   <bean id = "ChatDAO" 
+      class = "org.ititandev.dao.ChatDAO">
+      <property name = "dataSource" ref = "dataSource" />    
+   </bean> 
    <bean id = "ImageDAO" 
       class = "org.ititandev.dao.ImageDAO">
       <property name = "dataSource" ref = "dataSource" />    
