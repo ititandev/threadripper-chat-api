@@ -13,13 +13,6 @@ public class Conversation {
 	Boolean online;
 	int notiCount;
 
-	public String getConversationName() {
-		return conversationName;
-	}
-
-	public void setConversationName(String conversationName) {
-		this.conversationName = conversationName;
-	}
 
 	public List<String> getDisplayName() {
 		return displayName;

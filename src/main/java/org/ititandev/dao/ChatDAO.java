@@ -26,16 +26,16 @@ public class ChatDAO {
 	}
 
 	public String addConversation(List<String> usernames) {
-		String sql = "SELECT COUNT(1) AS result, conversation_id FROM "
-				+ "(SELECT conversation_id, GROUP_CONCAT( username ORDER BY username SEPARATOR ',') AS list_user "
-				+ "FROM threadripper.conversation GROUP BY conversation_id) AS list_conv "
+		String sql = "SELECT COUNT(1) AS result, conversationId FROM "
+				+ "(SELECT conversationId, GROUP_CONCAT( username ORDER BY username SEPARATOR ',') AS list_user "
+				+ "FROM threadripper.conversation GROUP BY conversationId) AS list_conv "
 				+ "WHERE list_conv.list_user = ?";
 		Collections.sort(usernames);
 		String list_user = String.join(",", usernames);
 		System.out.println(sql + list_user);
 		Map<String, Object> result = jdbcTemplate.queryForList(sql, list_user).get(0);
 		if (Integer.valueOf(result.get("result").toString()) > 0)
-			return result.get("conversation_id").toString();
+			return result.get("conversationId").toString();
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
@@ -43,17 +43,17 @@ public class ChatDAO {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(
 						"INSERT INTO conversation_setting  (conversation_setting.name) VALUES (null)",
-						new String[] { "conversation_id" });
+						new String[] { "conversationId" });
 				return ps;
 			}
 		}, keyHolder);
-		String conversation_id = keyHolder.getKey().toString();
-		Function<String, String> a = s -> s;
-		sql = "INSERT INTO conversation VALUES " + String.join(", ",
-				usernames.stream().map(s -> "(" + conversation_id + ", '" + s + "')").collect(Collectors.toList()));
+		String conversationId = keyHolder.getKey().toString();
+		
+		sql = "INSERT INTO conversation (conversationId, username) VALUES " + String.join(", ",
+				usernames.stream().map(s -> "(" + conversationId + ", '" + s + "')").collect(Collectors.toList()));
 
 		if (jdbcTemplate.update(sql) > 1)
-			return conversation_id;
+			return conversationId;
 		else
 			return "0";
 

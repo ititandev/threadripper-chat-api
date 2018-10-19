@@ -12,6 +12,8 @@ import org.ititandev.dao.ChatDAO;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,18 +30,24 @@ public class ChatController {
 		}
 		return returnList;
 	}
-
+	
+	@GetMapping("/api/conversation")
+	public void getConversation(Authentication authentication) {
+		String username = authentication.getName();
+		
+	}
+	
 	@PostMapping(value = "/api/conversation")
 	public Object addConversation(@RequestBody String body, HttpServletResponse res) throws JSONException, IOException {
 		JSONArray json = new JSONObject(body).getJSONArray("listUsername");
 		List<String> listUsername = getStringListFromJsonArray(json);
 		System.out.println(body);
 
-		String conversation_id = chatDAO.addConversation(listUsername);
-		if (conversation_id.equals("0")) {
+		String conversationId = chatDAO.addConversation(listUsername);
+		if (conversationId.equals("0")) {
 			res.sendError(520, "Some error has occurred");
 			return null;
 		}
-		return "{\"" + "conversation_id" + "\": \"" + conversation_id + "\"}";
+		return "{\"" + "conversationId" + "\": \"" + conversationId + "\"}";
 	}
 }

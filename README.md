@@ -48,6 +48,7 @@ input:  token in Authorization header
 
 ### `GET /api/user` 
 **For test only**
+
 ```json
 ->  [
         {
@@ -82,13 +83,14 @@ input:  token in Authorization header
 {
     "listUsername": [
         "username1",
+        "username2",
         "username2"
     ]
 }
 ```          
 ```json
 ->  {
-        "conversation_id": "12345"
+        "conversationId": "12345"
     }
 ```
 
