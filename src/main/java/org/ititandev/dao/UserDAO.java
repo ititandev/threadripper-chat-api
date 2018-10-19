@@ -35,6 +35,10 @@ public class UserDAO {
 		return empList;
 	}
 	
+	public Map<String, Object> getCurrentUserInfo(String username) {
+		String sql = "SELECT displayName, getAvatar(username) as avatarUrl, username, email, active FROM user WHERE username = ?";
+		return jdbcTemplate.queryForList(sql, username).get(0);
+	}
 	public String getDisplayName(String username) {
 		String sql = "SELECT displayName FROM user WHERE username = ?";
 		return jdbcTemplate.queryForList(sql, username).get(0).get("displayName").toString();
@@ -118,14 +122,9 @@ public class UserDAO {
 		return Boolean.valueOf(out.get("output").toString());
 	}
 
-	public List<Conversation> getConversation(String username) {
-		String sql = "SELECT * FROM conversation WHERE username = ?";
-		return jdbcTemplate.query(sql, new Object[] { username }, new ConversationMapper());
-	}
-
 	public List<UserReg> getUserList() {
 		String sql = "SELECT * FROM user";
 		return jdbcTemplate.query(sql, new Object[] {  }, new UserMapper());
 	}
-
+	
 }

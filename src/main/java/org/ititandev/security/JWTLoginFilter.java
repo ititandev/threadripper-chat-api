@@ -5,6 +5,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -23,6 +25,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import net.minidev.json.JSONObject;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -50,8 +56,9 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 			Authentication auth) throws IOException, ServletException {
 		tokenAuthenticationService.addAuthentication(res, auth);
 		String username = auth.getName();
-		String check = userDAO.checkVerify(username);
-		if (check.equals("false")) {
+		Map<String, Object> currentUser = userDAO.getCurrentUserInfo(username);
+		String active = currentUser.get("active").toString();
+		if (active.equals("false")) {
 			String body1 = new String(Files.readAllBytes(Paths.get(Config.getConfig("mail.verify.path1"))),
 					StandardCharsets.UTF_8);
 			String body2 = new String(Files.readAllBytes(Paths.get(Config.getConfig("mail.verify.path2"))),
@@ -60,7 +67,13 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 			String email = userDAO.getEmail(username);
 			MailService.sendMail(email, "Threadripper: Verify account", body1 + verify + body2);
 		}
-		res.getOutputStream().print("{\"active\": " + check + ", \"displayName\": \"" + userDAO.getDisplayName(username) + "\"}");
+		currentUser.remove("active");
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("active", Boolean.valueOf(active));
+		response.put("user", currentUser);
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		res.getOutputStream().print(objectMapper.writeValueAsString(response));
 	}
 
 }

@@ -119,11 +119,6 @@ public class UserController {
 		userDAO.updatePassword(username, passwordEncoder.encode(username));
 	}
 
-	@GetMapping("/api/friends")
-	public List<Conversation> account() {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		return userDAO.getConversation(username);
-	}
 
 	@PutMapping("/api/password")
 	public String updatePassword(HttpServletResponse response, @RequestParam("newPassword") String newPassword,
