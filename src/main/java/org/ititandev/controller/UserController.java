@@ -2,29 +2,21 @@ package org.ititandev.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.ititandev.Application;
 import org.ititandev.config.Config;
 import org.ititandev.dao.UserDAO;
-import org.ititandev.model.Conversation;
 import org.ititandev.model.UserReg;
 import org.ititandev.model.UserSearch;
 import org.ititandev.security.TokenHandler;
 import org.ititandev.service.MailService;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
@@ -36,7 +28,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 

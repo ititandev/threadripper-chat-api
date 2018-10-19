@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import org.ititandev.model.Conversation;
 import org.ititandev.model.Message;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.web.servlet.mvc.LastModified;
 
 public class ConversationMapper implements RowMapper<Conversation> {
 	public Conversation mapRow(ResultSet rs, int rowNum) throws SQLException {

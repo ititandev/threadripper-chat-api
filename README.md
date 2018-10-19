@@ -1,11 +1,11 @@
-# DONE:
+# THREADRIPPER CHAT API:
 
 ### `POST /api/login?username=&password=`
     
 ```json
 ->  token in header
     Authorization: CHAT eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3NzlkZjNkOC03NGQwLTQ4M2YtODlmNy05ZmY4ZTE5NTQwN2QiLCJzdWIiOiJhIiwiaWF0IjoxNTM5NDQ3NDM5LCJleHAiOjE1NDAwNTIyMzl9.RoxXnb38achZ6EjRwYKiYIcd35pac96w3NvFwQfZkhbqYh6C1z-9iqcuqLl_nDmF_I54soNPXSGZ16MMOHhsmA
-    
+
     {
         "active": true,  //(verify by email, true is default)
         "user": 
@@ -205,6 +205,33 @@ input: token in Authorization header
         }
     ]
 ```
+
+### `GET /api/avatar/{filename}.{ext}`
+**Support PNG, JPG, JPEG, GIF** 
+
+```json
+->  Header:
+    Content-Type: image/png (image/jpeg OR image/gif)
+    Content-Disposition: attachment; filename="{filename}.{ext}"
+```
+
+### `GET /api/image/{filename}.{ext}`
+**Support PNG, JPG, JPEG, GIF** 
+
+```json
+->  Header:
+    Content-Type: image/png (image/jpeg OR image/gif)
+    Content-Disposition: attachment; filename="{filename}.{ext}"
+```
+
+### `GET /api/file/**`
+**Support all file** 
+
+```json
+->  Header:
+    Content-Disposition: attachment; filename="{filename.ext}"
+```
+
 
 # TO DO:
 
