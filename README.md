@@ -5,8 +5,11 @@
 ```json
 ->  token in header
     Authorization: CHAT eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3NzlkZjNkOC03NGQwLTQ4M2YtODlmNy05ZmY4ZTE5NTQwN2QiLCJzdWIiOiJhIiwiaWF0IjoxNTM5NDQ3NDM5LCJleHAiOjE1NDAwNTIyMzl9.RoxXnb38achZ6EjRwYKiYIcd35pac96w3NvFwQfZkhbqYh6C1z-9iqcuqLl_nDmF_I54soNPXSGZ16MMOHhsmA
-    {"active": "true/false"} 
-    (verify by email, true is default)
+    {
+        "active": true, //(verify by email, true is default)
+        "displayName": "userA"
+    }
+    
 ```
 
 ### `POST /api/signup?username=&password=&displayName=&email=`
@@ -102,7 +105,7 @@ input: token in Authorization header
 ```
 
 ```json
-[
+[   
     {
         "conversationId": "2",
         "conversationName": null,
