@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,25 +33,33 @@ public class ChatController {
 		}
 		return returnList;
 	}
-	
+
 	@GetMapping("/api/conversation")
 	public List<Conversation> getConversation(Authentication authentication) {
-		String username = authentication.getName();
-		
-		
-		return chatDAO.getConversation(username);
+		return chatDAO.getConversation(authentication.getName());
 	}
-	
+
 	@PostMapping(value = "/api/conversation")
 	public Object addConversation(@RequestBody String body, HttpServletResponse res) throws JSONException, IOException {
 		JSONArray json = new JSONObject(body).getJSONArray("listUsername");
 		List<String> listUsername = getStringListFromJsonArray(json);
-		
+
 		String conversationId = chatDAO.addConversation(listUsername);
 		if (conversationId.equals("0")) {
 			res.sendError(520, "Some error has occurred");
 			return null;
 		}
 		return "{\"" + "conversationId" + "\": \"" + conversationId + "\"}";
+	}
+
+	@GetMapping(value = "/api/message")
+	public Object getMessage(@RequestParam("conversationId") String conversationId, HttpServletResponse res,
+			Authentication auth) throws IOException {
+		if (chatDAO.checkConversationId(auth.getName(), conversationId))
+			return chatDAO.getMessage(conversationId);
+		else {
+			res.sendError(520, "User does not have access privileges");
+			return null;
+		}
 	}
 }
