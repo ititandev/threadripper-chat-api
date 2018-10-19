@@ -28,8 +28,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.minidev.json.JSONObject;
-
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	private TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationServiceImpl();
