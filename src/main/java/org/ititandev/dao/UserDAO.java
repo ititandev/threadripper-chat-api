@@ -1,5 +1,8 @@
 package org.ititandev.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -14,9 +17,12 @@ import org.ititandev.mapper.ConversationMapper;
 import org.ititandev.mapper.UserMapper;
 import org.ititandev.mapper.UserSearchMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 public class UserDAO {
@@ -126,5 +132,24 @@ public class UserDAO {
 		String sql = "SELECT * FROM user";
 		return jdbcTemplate.query(sql, new Object[] {  }, new UserMapper());
 	}
+
+	public Integer insertAvatar(String username) {
+		String sql = "INSERT INTO avatar (username, datetime) VALUES (?, NOW())";
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "avatar_id" });
+				ps.setString(1, username);
+				return ps;
+			}
+		}, keyHolder);
+		return Integer.valueOf(keyHolder.getKey().toString());
+	}
 	
+	public int setPhotoFilename(String filename, int avatarId) {
+		String sql = "UPDATE avatar SET filename = ? WHERE avatar_id = ?";
+		return jdbcTemplate.update(sql, filename, avatarId);
+	}
 }

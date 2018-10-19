@@ -96,4 +96,43 @@ public class ChatDAO {
 		return jdbcTemplate.queryForList(sql, conversationId, username).get(0).get("count").toString().equals("1");
 	}
 
+	public int insertImage(String username) {
+
+		String sql = "INSERT INTO image () VALUES ()";
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "imageId" });
+				return ps;
+			}
+		}, keyHolder);
+		return Integer.valueOf(keyHolder.getKey().toString());
+
+	}
+
+	public int setImageFilename(String filename, int imageId) {
+		String sql = "UPDATE image SET filename = ? WHERE imageId = ?";
+		return jdbcTemplate.update(sql, filename, imageId);
+	}
+
+	public int insertFile(String username) {
+		String sql = "INSERT INTO file () VALUES ()";
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "fileId" });
+				return ps;
+			}
+		}, keyHolder);
+		return Integer.valueOf(keyHolder.getKey().toString());
+	}
+
+	public int setFileFilename(String filename, int fileId) {
+		String sql = "UPDATE file SET filename = ? WHERE fileId = ?";
+		return jdbcTemplate.update(sql, filename, fileId);
+	}
 }

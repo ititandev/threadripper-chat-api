@@ -207,30 +207,76 @@ input: token in Authorization header
 ```
 
 ### `GET /api/avatar/{filename}.{ext}`
-**Support PNG, JPG, JPEG, GIF** 
+**Support all format** 
 
 ```json
 ->  Header:
-    Content-Type: image/png (image/jpeg OR image/gif)
+    Content-Type: image/png (image/jpeg OR image/gif OR image/bmp ...)
     Content-Disposition: attachment; filename="{filename}.{ext}"
 ```
 
 ### `GET /api/image/{filename}.{ext}`
-**Support PNG, JPG, JPEG, GIF** 
+**Support all format** 
 
 ```json
 ->  Header:
-    Content-Type: image/png (image/jpeg OR image/gif)
+    Content-Type: image/png (image/jpeg OR image/gif OR image/bmp ...)
     Content-Disposition: attachment; filename="{filename}.{ext}"
 ```
 
 ### `GET /api/file/**`
-**Support all file** 
+**Support all format** 
 
 ```json
 ->  Header:
     Content-Disposition: attachment; filename="{filename.ext}"
 ```
+
+### `POST /api/avatar`
+**Support all format** 
+
+```json
+input: token in Authorization header
+param:
+    file: File type Object,
+    ext: file extension ("jpg"/"png"/"gif"/"bmp"/...)
+```
+```json
+{
+    "avatarUrl": "10.bmp"
+}
+```
+
+### `POST /api/image`
+**Support all format** 
+
+```json
+input: token in Authorization header
+param:
+    file: File type Object,
+    ext: file extension ("jpg"/"png"/"gif"/"bmp"/...)
+```
+```json
+{
+    "imageUrl": "10.jpg"
+}
+```
+
+### `POST /api/file`
+**Support all format** 
+
+```json
+input: token in Authorization header
+param:
+    file: File type Object,
+    ext: file extension ("cpp"/"png"/"py"/"exe"/...)
+```
+```json
+{
+    "fileUrl": "10.exe"
+}
+```
+
 
 
 # TO DO:

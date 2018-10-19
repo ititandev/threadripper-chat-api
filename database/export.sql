@@ -26,13 +26,13 @@ DROP TABLE IF EXISTS `avatar`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `avatar` (
   `avatar_id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(50) NOT NULL,
+  `filename` varchar(50) DEFAULT NULL,
   `username` varchar(50) NOT NULL,
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`avatar_id`),
   UNIQUE KEY `filename_UNIQUE` (`filename`),
   KEY `fk_username_idx` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `avatar` (
 
 LOCK TABLES `avatar` WRITE;
 /*!40000 ALTER TABLE `avatar` DISABLE KEYS */;
+INSERT INTO `avatar` VALUES (7,'7.png','a','2018-10-20 01:01:48'),(8,'8.png','a','2018-10-20 01:01:54'),(9,'9.png','a','2018-10-20 01:05:43'),(10,'10.bmp','a','2018-10-20 01:33:28');
 /*!40000 ALTER TABLE `avatar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,6 +92,56 @@ LOCK TABLES `conversation_setting` WRITE;
 /*!40000 ALTER TABLE `conversation_setting` DISABLE KEYS */;
 INSERT INTO `conversation_setting` VALUES (1,NULL),(2,NULL),(3,NULL),(4,NULL),(5,NULL),(6,NULL),(7,NULL),(8,NULL),(9,NULL),(10,NULL);
 /*!40000 ALTER TABLE `conversation_setting` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `file`
+--
+
+DROP TABLE IF EXISTS `file`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `file` (
+  `fileId` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `datetime` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`fileId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `file`
+--
+
+LOCK TABLES `file` WRITE;
+/*!40000 ALTER TABLE `file` DISABLE KEYS */;
+INSERT INTO `file` VALUES (1,'1.','2018-10-20 01:26:13'),(2,'2.apk','2018-10-20 01:27:05');
+/*!40000 ALTER TABLE `file` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `image`
+--
+
+DROP TABLE IF EXISTS `image`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `image` (
+  `imageId` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(50) DEFAULT NULL,
+  `datetime` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`imageId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `image`
+--
+
+LOCK TABLES `image` WRITE;
+/*!40000 ALTER TABLE `image` DISABLE KEYS */;
+INSERT INTO `image` VALUES (1,NULL,'2018-10-20 01:13:17'),(2,'2.jpg','2018-10-20 01:16:31');
+/*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -151,7 +202,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('a','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-14 18:05:29','2018-10-14 18:05:29','displayD','e7524bf7d12d8d414a15b8226e9b08f4',0),('afdfs','$2a$10$xdmaMrasAbjEfd6JkZGVGOG6sLkxR9fQeZ7wOO5x0KztKshLPxAD2','fsdfsdfdsf',1,0,'2018-10-17 08:28:05','2018-10-17 08:28:05','fsdfdsafa','ed312a0cf2a9cf992848dd73b0eb46f3',0),('b','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('c','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('d','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('dá','$2a$10$z42NDaay5NkuSeybjf/sZOeVICaA8T5N7YN74nPfAuJveT0h3ik7O','gsdgsdsd',1,0,'2018-10-17 08:31:35','2018-10-17 08:31:35','fsdgsdf','50457bf3ed27922c830683c56d12a1fc',0),('e','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('f','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('g','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('h','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('huynhha12798','$2a$10$FRLgeu8M2XhFhFN40KvwDe./6fCNkiEFXs2BmJzNh9T4rD4IdEtd6','huynhha12798@gmail.com',1,0,'2018-10-17 08:34:00','2018-10-17 08:34:00','Huynh Ha','f162fe661200a04ffcca2e440a1e3519',0);
+INSERT INTO `user` VALUES ('a','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-14 18:05:29','2018-10-14 18:05:29','displayD','e7524bf7d12d8d414a15b8226e9b08f4',0),('afdfs','$2a$10$xdmaMrasAbjEfd6JkZGVGOG6sLkxR9fQeZ7wOO5x0KztKshLPxAD2','fsdfsdfdsf',1,0,'2018-10-17 08:28:05','2018-10-17 08:28:05','fsdfdsafa','ed312a0cf2a9cf992848dd73b0eb46f3',0),('b','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('c','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('d','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('dá','$2a$10$z42NDaay5NkuSeybjf/sZOeVICaA8T5N7YN74nPfAuJveT0h3ik7O','gsdgsdsd',1,0,'2018-10-17 08:31:35','2018-10-17 08:31:35','fsdgsdf','50457bf3ed27922c830683c56d12a1fc',0),('e','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('f','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('g','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('h','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('huynhha12798','$2a$10$FRLgeu8M2XhFhFN40KvwDe./6fCNkiEFXs2BmJzNh9T4rD4IdEtd6','huynhha12798@gmail.com',1,0,'2018-10-17 08:34:00','2018-10-17 08:34:00','Huynh Ha','f162fe661200a04ffcca2e440a1e3519',0),('i','$2a$10$JKpphX0LVyYywRws./L5Vu7S1ewlwBUpdwe0Sh/La9xoUgth20mky','fsdfsdfdsf',1,0,'2018-10-19 17:50:05','2018-10-19 17:50:05','fsdfdsafa','96f785e13f8dec6cc97ddd2ee9f814ff',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +223,7 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `getAvatar`(user varchar(50)) RETURNS
     DETERMINISTIC
 BEGIN
 	DECLARE var VARCHAR(50); 
-	SELECT filename INTO var FROM threadripper.avatar WHERE username=user ORDER BY datetime DESC LIMIT 0, 1;
+	SELECT filename INTO var FROM threadripper.avatar WHERE username=user & filename <> null ORDER BY datetime DESC LIMIT 0, 1;
 	IF var IS NULL THEN SET var='default.jpg';
 	END IF;
 	RETURN var;
@@ -214,4 +265,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-19 15:50:05
+-- Dump completed on 2018-10-20  1:38:50
