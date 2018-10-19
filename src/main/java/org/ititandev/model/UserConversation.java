@@ -5,6 +5,15 @@ public class UserConversation {
 	String username;
 	String nickname;
 	String avatarUrl;
+	boolean online;
+
+	public boolean isOnline() {
+		return online;
+	}
+
+	public void setOnline(boolean online) {
+		this.online = online;
+	}
 
 	public String getDisplayName() {
 		return displayName;

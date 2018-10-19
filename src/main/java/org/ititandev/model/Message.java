@@ -3,12 +3,14 @@ package org.ititandev.model;
 import java.util.Date;
 
 public class Message {
-
+	
+	String messageId;
 	String type;
 	String content;
 	Date datetime;
 	String conversationId;
-	String fromUsername;
+	String username;
+	Boolean read;
 
 	public String getType() {
 		return type;
@@ -42,16 +44,32 @@ public class Message {
 		this.conversationId = conversationId;
 	}
 
-	public String getFromUsername() {
-		return fromUsername;
+	public String getMessageId() {
+		return messageId;
 	}
 
-	public void setFromUsername(String fromUsername) {
-		this.fromUsername = fromUsername;
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
 	}
-	
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Boolean getRead() {
+		return read;
+	}
+
+	public void setRead(Boolean read) {
+		this.read = read;
+	}
+
 	public static class MessageType {
-		public static final String JOIN = "JOIN"; 
+		public static final String JOIN = "JOIN";
 		public static final String LEAVE = "LEAVE";
 		public static final String TEXT = "TEXT";
 		public static final String IMAGE = "IMAGE";
@@ -59,6 +77,3 @@ public class Message {
 		public static final String CALL = "CALL";
 	}
 }
-
-
-

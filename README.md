@@ -95,7 +95,68 @@ input:  token in Authorization header
 ```
 
 
+### `GET /api/conversation`
 
+```json
+input: token in Authorization header
+```
+
+```json
+[
+    {
+        "conversationId": "2",
+        "conversationName": null,
+        "lastMessage": {
+            "messageId": "2",
+            "type": "TEXT",
+            "content": "2",
+            "datetime": "2018-10-19",
+            "conversationId": "2",
+            "username": "b",
+            "read": false
+        },
+        "listUser": [
+            {
+                "displayName": "displayD",
+                "username": "a",
+                "nickname": null,
+                "avatarUrl": "default.jpg",
+                "online": false
+            },
+            {
+                "displayName": "b",
+                "username": "c",
+                "nickname": null,
+                "avatarUrl": "default.jpg",
+                "online": false
+            }
+        ],
+        "notiCount": 1
+    },
+    {
+        "conversationId": "3",
+        "conversationName": null,
+        "lastMessage": null,
+        "listUser": [
+            {
+                "displayName": "displayD",
+                "username": "a",
+                "nickname": null,
+                "avatarUrl": "default.jpg",
+                "online": false
+            },
+            {
+                "displayName": "b",
+                "username": "d",
+                "nickname": null,
+                "avatarUrl": "default.jpg",
+                "online": false
+            }
+        ],
+        "notiCount": 0
+    }
+]
+```
 
 # TO DO:
 

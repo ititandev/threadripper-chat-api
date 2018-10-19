@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `threadripper` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `threadripper`;
--- MySQL dump 10.13  Distrib 8.0.11, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: threadripper
 -- ------------------------------------------------------
@@ -56,7 +56,7 @@ CREATE TABLE `conversation` (
   `username` varchar(50) NOT NULL,
   `nickname` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`conversationId`,`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `conversation` (
 
 LOCK TABLES `conversation` WRITE;
 /*!40000 ALTER TABLE `conversation` DISABLE KEYS */;
-INSERT INTO `conversation` VALUES (1,'b',NULL),(1,'f',NULL),(2,'a',NULL),(2,'c',NULL),(2,'d',NULL),(2,'f',NULL),(3,'a',NULL),(3,'d',NULL),(6,'a',NULL),(6,'b',NULL),(8,'a',NULL),(8,'b',NULL),(9,'a',NULL),(9,'c',NULL),(9,'d',NULL);
+INSERT INTO `conversation` VALUES (1,'b',NULL),(1,'f',NULL),(2,'a',NULL),(2,'c',NULL),(2,'d',NULL),(2,'f',NULL),(3,'a',NULL),(3,'d',NULL),(6,'a',NULL),(6,'b',NULL),(8,'a',NULL),(8,'b',NULL),(9,'a',NULL),(9,'c',NULL),(9,'d',NULL),(10,'a',NULL),(10,'d',NULL),(10,'g',NULL);
 /*!40000 ALTER TABLE `conversation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +80,7 @@ CREATE TABLE `conversation_setting` (
   `conversationId` int(11) NOT NULL AUTO_INCREMENT,
   `conversationName` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`conversationId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `conversation_setting` (
 
 LOCK TABLES `conversation_setting` WRITE;
 /*!40000 ALTER TABLE `conversation_setting` DISABLE KEYS */;
-INSERT INTO `conversation_setting` VALUES (1,NULL),(2,NULL),(3,NULL),(4,NULL),(5,NULL),(6,NULL),(7,NULL),(8,NULL),(9,NULL);
+INSERT INTO `conversation_setting` VALUES (1,NULL),(2,NULL),(3,NULL),(4,NULL),(5,NULL),(6,NULL),(7,NULL),(8,NULL),(9,NULL),(10,NULL);
 /*!40000 ALTER TABLE `conversation_setting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,14 +101,15 @@ DROP TABLE IF EXISTS `message`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `message` (
-  `message_id` int(11) NOT NULL AUTO_INCREMENT,
-  `conversation_id` int(11) DEFAULT NULL,
+  `messageId` int(11) NOT NULL AUTO_INCREMENT,
+  `conversationId` int(11) DEFAULT NULL,
   `username` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `type` varchar(10) COLLATE utf8_bin DEFAULT NULL,
   `content` varchar(200) COLLATE utf8_bin DEFAULT NULL,
   `datetime` datetime DEFAULT NULL,
-  PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `read` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`messageId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,6 +118,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` VALUES (1,2,'a','TEXT','1','2018-10-19 14:21:20',1),(2,2,'b','TEXT','2','2018-10-19 14:22:18',0),(3,9,'a','TEXT','3','2018-10-19 14:40:34',0),(4,9,'a','TEXT','4','2018-10-19 14:40:34',0);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,14 +151,14 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('a','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-14 18:05:29','2018-10-14 18:05:29','displayD','e7524bf7d12d8d414a15b8226e9b08f4',0),('afdfs','$2a$10$xdmaMrasAbjEfd6JkZGVGOG6sLkxR9fQeZ7wOO5x0KztKshLPxAD2','fsdfsdfdsf',1,0,'2018-10-17 08:28:05','2018-10-17 08:28:05','fsdfdsafa','ed312a0cf2a9cf992848dd73b0eb46f3',0),('dá','$2a$10$z42NDaay5NkuSeybjf/sZOeVICaA8T5N7YN74nPfAuJveT0h3ik7O','gsdgsdsd',1,0,'2018-10-17 08:31:35','2018-10-17 08:31:35','fsdgsdf','50457bf3ed27922c830683c56d12a1fc',0),('huynhha12798','$2a$10$FRLgeu8M2XhFhFN40KvwDe./6fCNkiEFXs2BmJzNh9T4rD4IdEtd6','huynhha12798@gmail.com',1,0,'2018-10-17 08:34:00','2018-10-17 08:34:00','Huynh Ha','f162fe661200a04ffcca2e440a1e3519',0);
+INSERT INTO `user` VALUES ('a','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-14 18:05:29','2018-10-14 18:05:29','displayD','e7524bf7d12d8d414a15b8226e9b08f4',0),('afdfs','$2a$10$xdmaMrasAbjEfd6JkZGVGOG6sLkxR9fQeZ7wOO5x0KztKshLPxAD2','fsdfsdfdsf',1,0,'2018-10-17 08:28:05','2018-10-17 08:28:05','fsdfdsafa','ed312a0cf2a9cf992848dd73b0eb46f3',0),('b','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('c','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('d','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('dá','$2a$10$z42NDaay5NkuSeybjf/sZOeVICaA8T5N7YN74nPfAuJveT0h3ik7O','gsdgsdsd',1,0,'2018-10-17 08:31:35','2018-10-17 08:31:35','fsdgsdf','50457bf3ed27922c830683c56d12a1fc',0),('e','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('f','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('g','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('h','$2a$10$gj4OtbyETCraxaVKBg5CXuyIxjOy93vo83nJCgnytwkv5BUHpjmi.','1611985@hcmut.edu.vn',1,0,'2018-10-19 15:20:56','2018-10-19 15:20:56','b','e7524bf7d12d8d414a15b8226e9b08f4',0),('huynhha12798','$2a$10$FRLgeu8M2XhFhFN40KvwDe./6fCNkiEFXs2BmJzNh9T4rD4IdEtd6','huynhha12798@gmail.com',1,0,'2018-10-17 08:34:00','2018-10-17 08:34:00','Huynh Ha','f162fe661200a04ffcca2e440a1e3519',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Dumping routines for database 'threadripper'
 --
-/*!50003 DROP FUNCTION IF EXISTS `get_avatar` */;
+/*!50003 DROP FUNCTION IF EXISTS `getAvatar` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -166,13 +168,35 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `get_avatar`(user varchar(50)) RETURNS varchar(50) CHARSET utf8
+CREATE DEFINER=`root`@`localhost` FUNCTION `getAvatar`(user varchar(50)) RETURNS varchar(50) CHARSET utf8
     DETERMINISTIC
 BEGIN
 	DECLARE var VARCHAR(50); 
 	SELECT filename INTO var FROM threadripper.avatar WHERE username=user ORDER BY datetime DESC LIMIT 0, 1;
 	IF var IS NULL THEN SET var='default.jpg';
 	END IF;
+	RETURN var;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP FUNCTION IF EXISTS `getNotiCount` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `getNotiCount`(id INTEGER) RETURNS int(11)
+    DETERMINISTIC
+BEGIN
+	DECLARE var INTEGER; 
+	SELECT count(1) INTO var FROM threadripper.message WHERE conversationId = id AND `read` = 0;
 	RETURN var;
 END ;;
 DELIMITER ;
@@ -190,4 +214,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-19 12:00:56
+-- Dump completed on 2018-10-19 15:50:05

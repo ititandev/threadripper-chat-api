@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 
 import org.ititandev.config.Config;
 import org.ititandev.model.Conversation;
-import org.ititandev.model.User;
+import org.ititandev.model.UserReg;
 import org.ititandev.model.UserSearch;
 import org.ititandev.mapper.ConversationMapper;
 import org.ititandev.mapper.UserMapper;
@@ -29,9 +29,9 @@ public class UserDAO {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	public List<User> getAll() {
+	public List<UserReg> getAll() {
 		String query = "SELECT * from user";
-		List<User> empList = jdbcTemplate.query(query, new UserMapper());
+		List<UserReg> empList = jdbcTemplate.query(query, new UserMapper());
 		return empList;
 	}
 
@@ -43,10 +43,10 @@ public class UserDAO {
 		return jdbcTemplate.update(sql, username, password, email, displayName, hash);
 	}
 
-	public int updateInfo(String username, User user) {
+	public int updateInfo(String username, UserReg userReg) {
 		String sql = "UPDATE user SET username = ?, email = ?, datetime_update = NOW(), name = ? "
 				+ "WHERE username = ?";
-		return jdbcTemplate.update(sql, user.getUsername(), user.getEmail(), user.getDisplayName(), username);
+		return jdbcTemplate.update(sql, userReg.getUsername(), userReg.getEmail(), userReg.getDisplayName(), username);
 	}
 
 	public String getOldPassword(String username) {
@@ -101,7 +101,7 @@ public class UserDAO {
 	}
 
 	public List<UserSearch> searchUser(String keyword) {
-		String sql = "SELECT user.username, displayName, email, " + "get_avatar(user.username) AS avatarUrl, online "
+		String sql = "SELECT user.username, displayName, email, " + "getAvatar(user.username) AS avatarUrl, online "
 				+ "FROM user WHERE (user.username LIKE '%" + keyword + "%' OR " + "email LIKE '%" + keyword
 				+ "%' OR displayName LIKE '%" + keyword + "%') LIMIT 0, 20";
 		return jdbcTemplate.query(sql, new Object[] {}, new UserSearchMapper());
@@ -119,7 +119,7 @@ public class UserDAO {
 		return jdbcTemplate.query(sql, new Object[] { username }, new ConversationMapper());
 	}
 
-	public List<User> getUserList() {
+	public List<UserReg> getUserList() {
 		String sql = "SELECT * FROM user";
 		return jdbcTemplate.query(sql, new Object[] {  }, new UserMapper());
 	}

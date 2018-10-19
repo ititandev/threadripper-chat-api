@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Conversation {
 
-	String conversationName;
-	List<UserConversation> listUser;
-	Message lastMessage;
 	String conversationId;
-	Boolean online;
+	String conversationName;
+	Message lastMessage;
+	List<UserConversation> listUser;
+
 	int notiCount;
 
 	public List<UserConversation> getListUser() {
@@ -41,14 +41,6 @@ public class Conversation {
 
 	public void setConversationId(String conversationId) {
 		this.conversationId = conversationId;
-	}
-
-	public Boolean getOnline() {
-		return online;
-	}
-
-	public void setOnline(Boolean online) {
-		this.online = online;
 	}
 
 	public int getNotiCount() {

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.ititandev.Application;
 import org.ititandev.dao.ChatDAO;
+import org.ititandev.mapper.ConversationMapper;
+import org.ititandev.model.Conversation;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,17 +34,18 @@ public class ChatController {
 	}
 	
 	@GetMapping("/api/conversation")
-	public void getConversation(Authentication authentication) {
+	public List<Conversation> getConversation(Authentication authentication) {
 		String username = authentication.getName();
 		
+		
+		return chatDAO.getConversation(username);
 	}
 	
 	@PostMapping(value = "/api/conversation")
 	public Object addConversation(@RequestBody String body, HttpServletResponse res) throws JSONException, IOException {
 		JSONArray json = new JSONObject(body).getJSONArray("listUsername");
 		List<String> listUsername = getStringListFromJsonArray(json);
-		System.out.println(body);
-
+		
 		String conversationId = chatDAO.addConversation(listUsername);
 		if (conversationId.equals("0")) {
 			res.sendError(520, "Some error has occurred");

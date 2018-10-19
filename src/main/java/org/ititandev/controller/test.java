@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.ititandev.Application;
 import org.ititandev.config.Config;
 import org.ititandev.dao.UserDAO;
-import org.ititandev.model.User;
+import org.ititandev.model.UserReg;
 import org.ititandev.service.MailService;
 
 @RestController
@@ -39,7 +39,7 @@ public class test {
 	}
 
 	@GetMapping("/userlist")
-	public List<User> test() {
+	public List<UserReg> test() {
 		return userDAO.getAll();
 	}
 

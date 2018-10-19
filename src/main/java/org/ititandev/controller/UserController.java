@@ -19,7 +19,7 @@ import org.ititandev.Application;
 import org.ititandev.config.Config;
 import org.ititandev.dao.UserDAO;
 import org.ititandev.model.Conversation;
-import org.ititandev.model.User;
+import org.ititandev.model.UserReg;
 import org.ititandev.model.UserSearch;
 import org.ititandev.security.TokenHandler;
 import org.ititandev.service.MailService;
@@ -167,7 +167,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/api/user")
-	public List<User> getUserList() {
+	public List<UserReg> getUserList() {
 		return userDAO.getUserList();
 	}
 	

@@ -1,6 +1,6 @@
 package org.ititandev.model;
 
-public class User {
+public class UserReg {
 
 	String username;
 	String password;
