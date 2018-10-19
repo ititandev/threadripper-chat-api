@@ -27,13 +27,13 @@ public class DownloadController {
 	static ImageDAO photoDAO = Application.context.getBean("ImageDAO", ImageDAO.class);
 	static UserDAO accountDAO = Application.context.getBean("UserDAO", UserDAO.class);
 
-	@GetMapping("/api/photo/{filename}.{ext}")
+	@GetMapping("/image/{filename}.{ext}")
 	byte[] getPhoto(HttpServletResponse response, @PathVariable("filename") String filename,
 			@PathVariable("ext") String ext) throws IOException {
 		filename += "." + ext;
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".jpg\"");
-		InputStream inputStream = new FileInputStream(Config.getConfig("photo.dir") + File.separator + filename);
+		InputStream inputStream = new FileInputStream(Config.getConfig("image.dir") + File.separator + filename);
 		BufferedImage img = ImageIO.read(inputStream);
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		ImageIO.write(img, "jpg", byteStream);
@@ -41,7 +41,7 @@ public class DownloadController {
 
 	}
 
-	@GetMapping("/api/avatar/{filename}.{ext}")
+	@GetMapping("/avatar/{filename}.{ext}")
 	byte[] getAvatar(HttpServletResponse response, @PathVariable("filename") String filename,
 			@PathVariable("ext") String ext) throws IOException {
 		filename += "." + ext;
@@ -54,14 +54,14 @@ public class DownloadController {
 		return byteStream.toByteArray();
 	}
 
-	@GetMapping("/api/file/{filename}.{ext}")
+	@GetMapping("/file/{filename}.{ext}")
 	byte[] getStory(HttpServletResponse response, @PathVariable("story_id") String filename,
 			@PathVariable("ext") String ext) throws IOException {
 		filename += "." + ext;
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + ".jpg\"");
-		InputStream inputStream = new FileInputStream(Config.getConfig("story.dir") + File.separator + filename);
+		InputStream inputStream = new FileInputStream(Config.getConfig("file.dir") + File.separator + filename);
 		BufferedImage img = ImageIO.read(inputStream);
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		ImageIO.write(img, "jpg", byteStream);

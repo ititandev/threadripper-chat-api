@@ -34,7 +34,11 @@ public class UserDAO {
 		List<UserReg> empList = jdbcTemplate.query(query, new UserMapper());
 		return empList;
 	}
-
+	
+	public String getDisplayName(String username) {
+		String sql = "SELECT displayName FROM user WHERE username = ?";
+		return jdbcTemplate.queryForList(sql, username).get(0).get("displayName").toString();
+	}
 	public int insert(String username, String password, String email, String displayName) {
 		String sql = "INSERT INTO user VALUES (?, ?, ?, 1, 0, NOW(), NOW(), ?, ?, 0)";
 		Random rand = new Random();

@@ -17,7 +17,7 @@
         "timestamp": 1539447546025,
         "status": 409,
         "error": "Conflict",
-        "message": "User đã tồn tại",
+        "message": "Username has been used",
         "path": "/api/signup"
     }
 
@@ -25,7 +25,7 @@
         "timestamp": 1539447546025,
         "status": 520,
         "error": "Unknown Error",
-        "message": "Đã có lỗi xảy ra",
+        "message": "Some error has occurred",
         "path": "/api/signup"
     }
 ```
@@ -39,7 +39,7 @@ input:  token in Authorization header
         "timestamp": 1539520526152,
         "status": 400,
         "error": "Bad Request",
-        "message": "Mật khẩu cũ không đúng",
+        "message": "Incorrect password",
         "path": "/api/changePassword"
     }
 
@@ -156,6 +156,44 @@ input: token in Authorization header
         "notiCount": 0
     }
 ]
+```
+
+
+### `GET /api/message`
+
+```json
+input: token in Authorization header
+```
+
+```json
+->  {
+        "timestamp": 1539943510009,
+        "status": 520,
+        "error": "Http Status 520",
+        "message": "User does not have access privileges",
+        "path": "/api/message"
+    }
+
+->  [
+        {
+            "messageId": "2",
+            "type": "TEXT",
+            "content": "2",
+            "datetime": "2018-10-19",
+            "conversationId": "2",
+            "username": "b",
+            "read": false
+        },
+        {
+            "messageId": "1",
+            "type": "TEXT",
+            "content": "1",
+            "datetime": "2018-10-19",
+            "conversationId": "2",
+            "username": "a",
+            "read": true
+        }
+    ]
 ```
 
 # TO DO:
