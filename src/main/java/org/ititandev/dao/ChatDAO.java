@@ -42,7 +42,7 @@ public class ChatDAO {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(
-						"INSERT INTO conversation_setting  (conversation_setting.name) VALUES (null)",
+						"INSERT INTO conversation_setting  (conversation_setting.conversationName) VALUES (null)",
 						new String[] { "conversationId" });
 				return ps;
 			}

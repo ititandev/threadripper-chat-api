@@ -5,37 +5,26 @@ import java.util.List;
 public class Conversation {
 
 	String conversationName;
-	List<String> displayName;
-	List<String> username;
-	List<String> avatarUrl;
+	List<UserConversation> listUser;
 	Message lastMessage;
 	String conversationId;
 	Boolean online;
 	int notiCount;
 
-
-	public List<String> getDisplayName() {
-		return displayName;
+	public List<UserConversation> getListUser() {
+		return listUser;
 	}
 
-	public void setDisplayName(List<String> displayName) {
-		this.displayName = displayName;
+	public void setListUser(List<UserConversation> listUser) {
+		this.listUser = listUser;
 	}
 
-	public List<String> getUsername() {
-		return username;
+	public String getConversationName() {
+		return conversationName;
 	}
 
-	public void setUsername(List<String> username) {
-		this.username = username;
-	}
-
-	public List<String> getAvatarUrl() {
-		return avatarUrl;
-	}
-
-	public void setAvatarUrl(List<String> avatarUrl) {
-		this.avatarUrl = avatarUrl;
+	public void setConversationName(String conversationName) {
+		this.conversationName = conversationName;
 	}
 
 	public Message getLastMessage() {

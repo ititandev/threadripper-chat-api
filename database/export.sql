@@ -52,9 +52,10 @@ DROP TABLE IF EXISTS `conversation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `conversation` (
-  `conversation_id` int(11) NOT NULL AUTO_INCREMENT,
+  `conversationId` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
-  PRIMARY KEY (`conversation_id`,`username`)
+  `nickname` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`conversationId`,`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -64,7 +65,7 @@ CREATE TABLE `conversation` (
 
 LOCK TABLES `conversation` WRITE;
 /*!40000 ALTER TABLE `conversation` DISABLE KEYS */;
-INSERT INTO `conversation` VALUES (1,'b'),(1,'f'),(2,'a'),(2,'c'),(2,'d'),(2,'f'),(3,'a'),(3,'d'),(6,'a'),(6,'b'),(8,'a'),(8,'b'),(9,'a'),(9,'c'),(9,'d');
+INSERT INTO `conversation` VALUES (1,'b',NULL),(1,'f',NULL),(2,'a',NULL),(2,'c',NULL),(2,'d',NULL),(2,'f',NULL),(3,'a',NULL),(3,'d',NULL),(6,'a',NULL),(6,'b',NULL),(8,'a',NULL),(8,'b',NULL),(9,'a',NULL),(9,'c',NULL),(9,'d',NULL);
 /*!40000 ALTER TABLE `conversation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,9 +77,9 @@ DROP TABLE IF EXISTS `conversation_setting`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `conversation_setting` (
-  `conversation_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`conversation_id`)
+  `conversationId` int(11) NOT NULL AUTO_INCREMENT,
+  `conversationName` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`conversationId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -189,4 +190,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-19 10:07:05
+-- Dump completed on 2018-10-19 12:00:56
