@@ -11,7 +11,7 @@
         "user": 
             {
             "displayName": "userA",
-            "avatarUrl": "default.jpg",
+            "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
             "username": "a",
             "email": "a@gmail.com"
             }
@@ -81,7 +81,7 @@ input:  token in Authorization header
             "username": "huynhha12798",
             "displayName": "Huynh Ha",
             "email": "huynhha12798@gmail.com",
-            "avatarUrl": "default.jpg",
+            "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
             "online": false
         }
     ]
@@ -130,14 +130,14 @@ input: token in Authorization header
                 "displayName": "displayD",
                 "username": "a",
                 "nickname": null,
-                "avatarUrl": "default.jpg",
+                "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
                 "online": false
             },
             {
                 "displayName": "b",
                 "username": "c",
                 "nickname": null,
-                "avatarUrl": "default.jpg",
+                "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
                 "online": false
             }
         ],
@@ -152,14 +152,14 @@ input: token in Authorization header
                 "displayName": "displayD",
                 "username": "a",
                 "nickname": null,
-                "avatarUrl": "default.jpg",
+                "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
                 "online": false
             },
             {
                 "displayName": "b",
                 "username": "d",
                 "nickname": null,
-                "avatarUrl": "default.jpg",
+                "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
                 "online": false
             }
         ],
@@ -168,6 +168,42 @@ input: token in Authorization header
 ]
 ```
 
+### `GET /api/conversation/{conversationId}`
+```json
+input: token in Authorization header
+```
+```json
+{
+    "conversationId": "2",
+    "conversationName": null,
+    "lastMessage": {
+        "messageId": "2",
+        "type": "TEXT",
+        "content": "2",
+        "datetime": "2018-10-19 14:22:18",
+        "conversationId": "2",
+        "username": "b",
+        "read": false
+    },
+    "listUser": [
+        {
+            "displayName": "displayD",
+            "username": "a",
+            "nickname": null,
+            "avatarUrl": "http://localhost:8083/api/avatar/10.bmp",
+            "online": false
+        },
+        {
+            "displayName": "b",
+            "username": "c",
+            "nickname": null,
+            "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
+            "online": false
+        }
+    ],
+    "notiCount": 1
+}
+```
 
 ### `GET /api/message/{conversationId}`
 
@@ -243,7 +279,7 @@ param:
 ```
 ```json
 {
-    "avatarUrl": "10.bmp"
+    "avatarUrl": "http://localhost:8083/api/avatar/10.bmp"
 }
 ```
 
@@ -258,7 +294,7 @@ param:
 ```
 ```json
 {
-    "imageUrl": "10.jpg"
+    "imageUrl": "http://localhost:8083/api/image/10.jpg"
 }
 ```
 
@@ -273,7 +309,7 @@ param:
 ```
 ```json
 {
-    "fileUrl": "10.exe"
+    "fileUrl": "http://localhost:8083/api/file/10.exe"
 }
 ```
 

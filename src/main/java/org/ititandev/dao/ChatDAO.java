@@ -96,6 +96,21 @@ public class ChatDAO {
 		return jdbcTemplate.queryForList(sql, conversationId, username).get(0).get("count").toString().equals("1");
 	}
 
+	public Conversation getConversationWithId(String conversationId) {
+		String sql = "SELECT DISTINCT conversation.conversationId, conversationName, "
+				+ "getNotiCount(conversation.conversationId) AS notiCount, messageId, `type`, "
+				+ "content, `datetime`, mes.username, `read` FROM conversation INNER JOIN conversation_setting LEFT JOIN "
+				+ "(SELECT conversationId, messageId, content, `type`, username, `datetime`, `read` "
+				+ "FROM message WHERE messageId IN (SELECT MAX(messageId) as id FROM message GROUP BY conversationId)) AS mes "
+				+ "ON conversation.conversationId = mes.conversationId WHERE conversation.conversationId = ?";
+		List<Conversation> list = jdbcTemplate.query(sql, new Object[] { conversationId }, new ConversationMapper());
+		list.stream().forEach(c -> c.setListUser(getUserOfConversation(c.getConversationId())));
+		if (list.isEmpty())
+			return null;
+		else
+			return list.get(0);
+	}
+
 	public int insertImage(String username) {
 
 		String sql = "INSERT INTO image () VALUES ()";
@@ -135,4 +150,5 @@ public class ChatDAO {
 		String sql = "UPDATE file SET filename = ? WHERE fileId = ?";
 		return jdbcTemplate.update(sql, filename, fileId);
 	}
+
 }

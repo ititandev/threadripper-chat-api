@@ -39,10 +39,17 @@ public class ChatController {
 	public List<Conversation> getConversation(Authentication auth) {
 		return chatDAO.getConversation(auth.getName());
 	}
-	
-	@GetMapping("/api/conversation/{id}")
-	public List<Conversation> getConversationWithId(Authentication auth) {
-		return chatDAO.getConversation(auth.getName());
+
+	@GetMapping("/api/conversation/{conversationId}")
+	public Conversation getConversationWithId(Authentication auth,
+			@PathVariable("conversationId") String conversationId, HttpServletResponse res) throws IOException {
+
+		if (chatDAO.checkConversationId(auth.getName(), conversationId))
+			return chatDAO.getConversationWithId(conversationId);
+		else {
+			res.sendError(520, "User does not have access privileges");
+			return null;
+		}
 	}
 
 	@PostMapping(value = "/api/conversation")
