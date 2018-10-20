@@ -40,6 +40,27 @@
     }
 ```
 
+### `POST /api/signup2?username=&password=&displayName=&email=&filename=`
+```json
+->  {"success": "true"}
+
+->  {
+        "timestamp": 1539447546025,
+        "status": 409,
+        "error": "Conflict",
+        "message": "Username has been used",
+        "path": "/api/signup"
+    }
+
+->  {
+        "timestamp": 1539447546025,
+        "status": 520,
+        "error": "Unknown Error",
+        "message": "Some error has occurred",
+        "path": "/api/signup"
+    }
+```
+
 ### `PUT /api/password?oldPassword=&newPassword=`
 ```
 input:  token in Authorization header

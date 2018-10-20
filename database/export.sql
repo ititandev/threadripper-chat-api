@@ -30,9 +30,8 @@ CREATE TABLE `avatar` (
   `username` varchar(50) NOT NULL,
   `datetime` datetime DEFAULT NULL,
   PRIMARY KEY (`avatar_id`),
-  UNIQUE KEY `filename_UNIQUE` (`filename`),
   KEY `fk_username_idx` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,4 +264,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-20  8:08:50
+-- Dump completed on 2018-10-20  9:38:28

@@ -148,7 +148,7 @@ public class UserDAO {
 		return Integer.valueOf(keyHolder.getKey().toString());
 	}
 	
-	public int setPhotoFilename(String filename, int avatarId) {
+	public int setAvatarFilename(String filename, int avatarId) {
 		String sql = "UPDATE avatar SET filename = ? WHERE avatar_id = ?";
 		return jdbcTemplate.update(sql, filename, avatarId);
 	}

@@ -82,7 +82,7 @@ public class UploadController {
 			stream.write(bytes);
 			stream.close();
 
-			if (userDAO.setPhotoFilename(filename, avatarId) > 0) {
+			if (userDAO.setAvatarFilename(filename, avatarId) > 0) {
 				System.out.println("[ITitan] Upload AVATAR SUCCESS file: " + serverFile.getAbsolutePath());
 				return "{\"avatarUrl\": \"" + Config.getConfig("hostname") + "/api/avatar/" + filename + "\"}";
 			} else {

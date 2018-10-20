@@ -74,6 +74,39 @@ public class UserController {
 			response.sendError(520, "Some error has occurred");
 		return null;
 	}
+	
+	@PostMapping(value = "/api/signup2")
+	public Object signUp2(HttpServletResponse response, @RequestParam("username") String username,
+			@RequestParam("password") String password, @RequestParam("displayName") String displayName,
+			@RequestParam("email") String email, @RequestParam("filename") String filename) throws IOException, JSONException {
+		response.setContentType("application/json");
+		int result = 0;
+		try {
+			String encoded_password = passwordEncoder.encode(password);
+			result = userDAO.insert(username, encoded_password, email, displayName);
+			int avatarId = userDAO.insertAvatar(username);
+			System.out.println(avatarId + "  " + filename);
+			userDAO.setAvatarFilename(filename, avatarId);
+		} catch (DuplicateKeyException e) {
+			response.sendError(409, "Username has been used: " + e.getMessage());
+			return null;
+		}
+		if (result == 1) {
+			// String body1 = new
+			// String(Files.readAllBytes(Paths.get(Config.getConfig("mail.verify.path1"))),
+			// StandardCharsets.UTF_8);
+			// String body2 = new
+			// String(Files.readAllBytes(Paths.get(Config.getConfig("mail.verify.path2"))),
+			// StandardCharsets.UTF_8);
+			// String verify = userDAO.getVerifyLink(json.getString("username"));
+			// String email = userDAO.getEmail(json.getString("username"));
+			// MailService.sendMail(email, "Threadripper: Verify account", body1 + verify +
+			// body2);
+			return "{\"success\": true}";
+		} else
+			response.sendError(520, "Some error has occurred");
+		return null;
+	}
 
 	@GetMapping("/api/verify/resend/{username}")
 	public Object resend(@PathVariable("username") String username) throws IOException {
