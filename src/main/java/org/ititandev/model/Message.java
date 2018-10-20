@@ -7,7 +7,7 @@ public class Message {
 	String messageId;
 	String type;
 	String content;
-	Date datetime;
+	String datetime;
 	String conversationId;
 	String username;
 	Boolean read;
@@ -28,11 +28,11 @@ public class Message {
 		this.content = content;
 	}
 
-	public Date getDatetime() {
+	public String getDatetime() {
 		return datetime;
 	}
 
-	public void setDatetime(Date datetime) {
+	public void setDatetime(String datetime) {
 		this.datetime = datetime;
 	}
 

@@ -84,7 +84,7 @@ public class UploadController {
 
 			if (userDAO.setPhotoFilename(filename, avatarId) > 0) {
 				System.out.println("[ITitan] Upload AVATAR SUCCESS file: " + serverFile.getAbsolutePath());
-				return "{\"avatarUrl\": \"" + filename + "\"}";
+				return "{\"avatarUrl\": \"" + Config.getConfig("hostname") + "/api/avatar/" + filename + "\"}";
 			} else {
 				res.sendError(520, "Some error has occurred");
 				return null;
@@ -115,7 +115,7 @@ public class UploadController {
 
 			if (chatDAO.setImageFilename(filename, imageId) > 0) {
 				System.out.println("[ITitan] Upload IMAGE SUCCESS file: " + serverFile.getAbsolutePath());
-				return "{\"imageUrl\": \"" + filename + "\"}";
+				return "{\"imageUrl\": \"" + Config.getConfig("hostname") + "/api/image/" + filename + "\"}";
 			} else {
 				res.sendError(520, "Some error has occurred");
 				return null;
@@ -146,7 +146,7 @@ public class UploadController {
 
 			if (chatDAO.setFileFilename(filename, imageId) > 0) {
 				System.out.println("[ITitan] Upload FILE SUCCESS file: " + serverFile.getAbsolutePath());
-				return "{\"fileUrl\": \"" + filename + "\"}";
+				return "{\"fileUrl\": \"" + Config.getConfig("hostname") + "/api/file/" + filename + "\"}";
 			} else {
 				res.sendError(520, "Some error has occurred");
 				return null;

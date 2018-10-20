@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,8 +36,13 @@ public class ChatController {
 	}
 
 	@GetMapping("/api/conversation")
-	public List<Conversation> getConversation(Authentication authentication) {
-		return chatDAO.getConversation(authentication.getName());
+	public List<Conversation> getConversation(Authentication auth) {
+		return chatDAO.getConversation(auth.getName());
+	}
+	
+	@GetMapping("/api/conversation/{id}")
+	public List<Conversation> getConversationWithId(Authentication auth) {
+		return chatDAO.getConversation(auth.getName());
 	}
 
 	@PostMapping(value = "/api/conversation")
@@ -52,8 +58,8 @@ public class ChatController {
 		return "{\"" + "conversationId" + "\": \"" + conversationId + "\"}";
 	}
 
-	@GetMapping(value = "/api/message")
-	public Object getMessage(@RequestParam("conversationId") String conversationId, HttpServletResponse res,
+	@GetMapping(value = "/api/message/{conversationId}")
+	public Object getMessage(@PathVariable("conversationId") String conversationId, HttpServletResponse res,
 			Authentication auth) throws IOException {
 		if (chatDAO.checkConversationId(auth.getName(), conversationId))
 			return chatDAO.getMessage(conversationId);

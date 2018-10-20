@@ -7,7 +7,7 @@
     Authorization: CHAT eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3NzlkZjNkOC03NGQwLTQ4M2YtODlmNy05ZmY4ZTE5NTQwN2QiLCJzdWIiOiJhIiwiaWF0IjoxNTM5NDQ3NDM5LCJleHAiOjE1NDAwNTIyMzl9.RoxXnb38achZ6EjRwYKiYIcd35pac96w3NvFwQfZkhbqYh6C1z-9iqcuqLl_nDmF_I54soNPXSGZ16MMOHhsmA
 
     {
-        "active": true,  //(verify by email, true is default)
+        "active": true,     (verify by email, true is default)
         "user": 
             {
             "displayName": "userA",
@@ -169,7 +169,7 @@ input: token in Authorization header
 ```
 
 
-### `GET /api/message`
+### `GET /api/message/{conversationId}`
 
 ```json
 input: token in Authorization header

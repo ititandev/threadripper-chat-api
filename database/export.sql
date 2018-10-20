@@ -219,11 +219,11 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `getAvatar`(user varchar(50)) RETURNS varchar(50) CHARSET utf8
+CREATE DEFINER=`root`@`localhost` FUNCTION `getAvatar`(u varchar(50)) RETURNS varchar(50) CHARSET utf8
     DETERMINISTIC
 BEGIN
 	DECLARE var VARCHAR(50); 
-	SELECT filename INTO var FROM threadripper.avatar WHERE username=user & filename <> null ORDER BY datetime DESC LIMIT 0, 1;
+	SELECT filename INTO var FROM threadripper.avatar WHERE avatar.username=u ORDER BY datetime DESC LIMIT 1;
 	IF var IS NULL THEN SET var='default.jpg';
 	END IF;
 	RETURN var;
@@ -265,4 +265,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-20  1:38:50
+-- Dump completed on 2018-10-20  8:08:50

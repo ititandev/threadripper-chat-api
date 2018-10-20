@@ -65,6 +65,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 			String email = userDAO.getEmail(username);
 			MailService.sendMail(email, "Threadripper: Verify account", body1 + verify + body2);
 		}
+		currentUser.put("avatarUrl", Config.getConfig("hostname") + "/api/avatar/" + currentUser.get("avatarUrl"));
 		currentUser.remove("active");
 		Map<String, Object> response = new HashMap<String, Object>();
 		response.put("active", Boolean.valueOf(active));
