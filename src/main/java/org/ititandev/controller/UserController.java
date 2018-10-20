@@ -78,15 +78,14 @@ public class UserController {
 	@PostMapping(value = "/api/signup2")
 	public Object signUp2(HttpServletResponse response, @RequestParam("username") String username,
 			@RequestParam("password") String password, @RequestParam("displayName") String displayName,
-			@RequestParam("email") String email, @RequestParam("filename") String filename) throws IOException, JSONException {
+			@RequestParam("email") String email, @RequestParam("avatarUrl") String avatarUrl) throws IOException, JSONException {
 		response.setContentType("application/json");
 		int result = 0;
 		try {
 			String encoded_password = passwordEncoder.encode(password);
 			result = userDAO.insert(username, encoded_password, email, displayName);
 			int avatarId = userDAO.insertAvatar(username);
-			System.out.println(avatarId + "  " + filename);
-			userDAO.setAvatarFilename(filename, avatarId);
+			userDAO.setAvatarFilename(avatarUrl, avatarId);
 		} catch (DuplicateKeyException e) {
 			response.sendError(409, "Username has been used: " + e.getMessage());
 			return null;

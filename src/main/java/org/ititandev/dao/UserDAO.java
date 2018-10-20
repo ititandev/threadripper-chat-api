@@ -148,8 +148,8 @@ public class UserDAO {
 		return Integer.valueOf(keyHolder.getKey().toString());
 	}
 	
-	public int setAvatarFilename(String filename, int avatarId) {
-		String sql = "UPDATE avatar SET filename = ? WHERE avatar_id = ?";
-		return jdbcTemplate.update(sql, filename, avatarId);
+	public int setAvatarFilename(String avatarUrl, int avatarId) {
+		String sql = "UPDATE avatar SET avatarUrl = ? WHERE avatar_id = ?";
+		return jdbcTemplate.update(sql, avatarUrl, avatarId);
 	}
 }

@@ -73,6 +73,7 @@ public class UploadController {
 
 		int avatarId = userDAO.insertAvatar(username);
 		String filename = avatarId + "." + ext;
+		String avatarUrl = Config.getConfig("hostname") + "/api/avatar/" + filename;
 		try {
 			byte[] bytes = file.getBytes();
 			File dir = new File(Config.getConfig("avatar.dir"));
@@ -82,9 +83,9 @@ public class UploadController {
 			stream.write(bytes);
 			stream.close();
 
-			if (userDAO.setAvatarFilename(filename, avatarId) > 0) {
+			if (userDAO.setAvatarFilename(avatarUrl, avatarId) > 0) {
 				System.out.println("[ITitan] Upload AVATAR SUCCESS file: " + serverFile.getAbsolutePath());
-				return "{\"avatarUrl\": \"" + Config.getConfig("hostname") + "/api/avatar/" + filename + "\"}";
+				return "{\"avatarUrl\": \"" + avatarUrl + "\"}";
 			} else {
 				res.sendError(520, "Some error has occurred");
 				return null;
@@ -104,6 +105,7 @@ public class UploadController {
 
 		int imageId = chatDAO.insertImage(username);
 		String filename = imageId + "." + ext;
+		String imageUrl = Config.getConfig("hostname") + "/api/image/" + filename;
 		try {
 			byte[] bytes = file.getBytes();
 			File dir = new File(Config.getConfig("image.dir"));
@@ -115,7 +117,7 @@ public class UploadController {
 
 			if (chatDAO.setImageFilename(filename, imageId) > 0) {
 				System.out.println("[ITitan] Upload IMAGE SUCCESS file: " + serverFile.getAbsolutePath());
-				return "{\"imageUrl\": \"" + Config.getConfig("hostname") + "/api/image/" + filename + "\"}";
+				return "{\"imageUrl\": \"" + imageUrl + "\"}";
 			} else {
 				res.sendError(520, "Some error has occurred");
 				return null;
@@ -135,6 +137,7 @@ public class UploadController {
 
 		int imageId = chatDAO.insertFile(username);
 		String filename = imageId + "." + ext;
+		String fileUrl = Config.getConfig("hostname") + "/api/file/" + filename;
 		try {
 			byte[] bytes = file.getBytes();
 			File dir = new File(Config.getConfig("file.dir"));
@@ -146,7 +149,7 @@ public class UploadController {
 
 			if (chatDAO.setFileFilename(filename, imageId) > 0) {
 				System.out.println("[ITitan] Upload FILE SUCCESS file: " + serverFile.getAbsolutePath());
-				return "{\"fileUrl\": \"" + Config.getConfig("hostname") + "/api/file/" + filename + "\"}";
+				return "{\"fileUrl\": \"" + fileUrl + "\"}";
 			} else {
 				res.sendError(520, "Some error has occurred");
 				return null;

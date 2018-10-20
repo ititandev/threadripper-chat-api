@@ -40,7 +40,7 @@
     }
 ```
 
-### `POST /api/signup2?username=&password=&displayName=&email=&filename=`
+### `POST /api/signup2?username=&password=&displayName=&email=&avatarUrl=`
 ```json
 ->  {"success": "true"}
 
@@ -345,43 +345,32 @@ GET /api/verify?username= &hash=
 GET /api/forget?username=
     -> newPassword
 
-POST /api/changeAvatar
-    token
-    file:
+
 
 
     
 
 
-GET /api/message/{conversationId}
-
-GET /api/
 
 
 
-GET /friends
-    token
-    ->  displayName, photoUrl
-        Message: lastMessage
-        conversationId
-        online
-(subcribe /topic/online before GET request)    
+SEND /conversation/{conversationId}
+
+SUBCRIBE /topic/{username}
 
 
 
-SEND /app/private/{conversationId}
-
-SUBCRIBE /topic/{conversationId}
 
 
-
+```
 Message:
     type: JOIN, LEAVE, TEXT, IMAGE, FILE, CALL
     content: null/...
     datetime: 
     conversationId:
     fromUsername:
-
+```
+```
 User:
     username
     photoUrl
@@ -390,4 +379,4 @@ User:
     password
     email
     online
-
+```

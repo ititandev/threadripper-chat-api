@@ -13,7 +13,7 @@ public class UserSearchMapper implements RowMapper<UserSearch> {
 		userSearch.setUsername(rs.getString("username"));
 		userSearch.setDisplayName(rs.getString("displayName"));
 		userSearch.setEmail(rs.getString("email"));
-		userSearch.setAvatarUrl(Config.getConfig("hostname") + "/api/avatar/" + rs.getString("avatarUrl"));
+		userSearch.setAvatarUrl(rs.getString("avatarUrl"));
 		userSearch.setOnline(rs.getBoolean("online"));
 		return userSearch;
 	}

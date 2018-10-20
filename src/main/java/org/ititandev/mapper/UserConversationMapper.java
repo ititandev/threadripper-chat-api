@@ -13,7 +13,7 @@ public class UserConversationMapper implements RowMapper<UserConversation> {
 		userConversation.setUsername(rs.getString("username"));
 		userConversation.setDisplayName(rs.getString("displayName"));
 		userConversation.setNickname(rs.getString("nickname"));
-		userConversation.setAvatarUrl(Config.getConfig("hostname") + "/api/avatar/" + rs.getString("avatarUrl"));
+		userConversation.setAvatarUrl(rs.getString("avatarUrl"));
 		userConversation.setOnline(rs.getBoolean("online"));
 		return userConversation;
 	}
