@@ -1,4 +1,63 @@
 # THREADRIPPER CHAT API:
+## WEBSOCKET API:
+
+### `ENDPOINT /ws`
+
+### `SEND /queue/sendMessage`
+**request:**
+```json
+{
+    "token": "CHAT eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3NzlkZjNkOC03NGQwLTQ4M2YtODlmNy05ZmY4ZTE5NTQwN2QiLCJzdWIiOiJhIiwiaWF0IjoxNTM5NDQ3NDM5LCJleHAiOjE1NDAwNTIyMzl9.RoxXnb38achZ6EjRwYKiYIcd35pac96w3NvFwQfZkhbqYh6C1z-9iqcuqLl_nDmF_I54soNPXSGZ16MMOHhsmA",
+    "type": "JOIN"
+}
+```
+```json
+{  
+    "content": "test",
+    "conversationId": "1",
+    "type": "TEXT",
+    "token": "CHAT eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3NzlkZjNkOC03NGQwLTQ4M2YtODlmNy05ZmY4ZTE5NTQwN2QiLCJzdWIiOiJhIiwiaWF0IjoxNTM5NDQ3NDM5LCJleHAiOjE1NDAwNTIyMzl9.RoxXnb38achZ6EjRwYKiYIcd35pac96w3NvFwQfZkhbqYh6C1z-9iqcuqLl_nDmF_I54soNPXSGZ16MMOHhsmA"
+}
+```
+
+### `SUBCRIBE /topic/{username}`
+**response: token attribute is not used**
+```json
+{
+    "messageId":null,
+    "type":"JOIN",
+    "content":null,
+    "datetime":null,
+    "conversationId":null,
+    "username":"a",
+    "read": null,
+    "token":""}
+```
+```json
+{
+    "messageId":null,
+    "type":"LEAVE",
+    "content":null,
+    "datetime":null,
+    "conversationId":null,
+    "username":"b",
+    "read":null,
+    "token":null
+}
+```
+```json
+{  
+    "messageId":"23",
+    "type":"TEXT",
+    "content":"fsd",
+    "datetime":"2018-10-22 03:10:34",
+    "conversationId":"1",
+    "username":"b",
+    "read":false,
+    "token":""
+}
+```
+## REST API:
 
 ### `POST /api/login?username=&password=`
     
@@ -7,7 +66,7 @@
     Authorization: CHAT eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI3NzlkZjNkOC03NGQwLTQ4M2YtODlmNy05ZmY4ZTE5NTQwN2QiLCJzdWIiOiJhIiwiaWF0IjoxNTM5NDQ3NDM5LCJleHAiOjE1NDAwNTIyMzl9.RoxXnb38achZ6EjRwYKiYIcd35pac96w3NvFwQfZkhbqYh6C1z-9iqcuqLl_nDmF_I54soNPXSGZ16MMOHhsmA
 
     {
-        "active": true,     (verify by email, true is default)
+        "active": true, 
         "user": 
             {
             "displayName": "userA",

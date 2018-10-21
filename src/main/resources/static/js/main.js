@@ -81,7 +81,7 @@ function sendMessage(event) {
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
     
-  if (message.conversationId == conversationId) {
+  
     var messageElement = document.createElement('li');
 
     if(message.type === 'JOIN') {
@@ -91,6 +91,8 @@ function onMessageReceived(payload) {
         messageElement.classList.add('event-message');
         message.content = message.username + ' left!';
     } else {
+    	if (message.conversationId != conversationId)
+    		return;
         messageElement.classList.add('chat-message');
 
         var avatarElement = document.createElement('i');
@@ -114,7 +116,7 @@ function onMessageReceived(payload) {
 
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
-  }
+  
 }
 
 

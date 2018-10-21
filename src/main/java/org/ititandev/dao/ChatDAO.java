@@ -192,6 +192,7 @@ public class ChatDAO {
 		}, keyHolder);
 		mes.setMessageId(keyHolder.getKey().toString());
 		mes.setDatetime(datetime);
+		mes.setRead(false);
 		return mes;
 	}
 
