@@ -80,7 +80,8 @@ function sendMessage(event) {
 
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
-    console.log(message.content)
+    
+  if (message.conversationId == conversationId) {
     var messageElement = document.createElement('li');
 
     if(message.type === 'JOIN') {
@@ -113,6 +114,7 @@ function onMessageReceived(payload) {
 
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
+  }
 }
 
 
