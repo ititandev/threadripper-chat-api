@@ -44,5 +44,13 @@ public class TokenHandler {
 		return username;
 		
 	}
+	
+	public boolean isExpired(String token) {
+		return Jwts.parser()
+	  		  	  .setSigningKey(SECRET)
+	  		  	  .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+	  		  	  .getBody()
+	  		  	  .getExpiration().before(new Date(System.currentTimeMillis()));
+	}
 
 }

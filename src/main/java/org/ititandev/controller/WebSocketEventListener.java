@@ -1,6 +1,11 @@
 package org.ititandev.controller;
 
-import org.ititandev.model.ChatMessage;
+import java.util.List;
+
+import org.ititandev.Application;
+import org.ititandev.dao.ChatDAO;
+import org.ititandev.model.Message;
+import org.ititandev.model.MessageType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,34 +16,35 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-
 @Component
 public class WebSocketEventListener {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
+	private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
 
-    @Autowired
-    private SimpMessageSendingOperations messagingTemplate;
+	@Autowired
+	private SimpMessageSendingOperations messagingTemplate;
 
-    @EventListener
-    public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-        logger.info("Received a new web socket connection");
-        
-    }
+	static ChatDAO chatDAO = Application.context.getBean("ChatDAO", ChatDAO.class);
 
-    @EventListener
-    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
-        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+	@EventListener
+	public void handleWebSocketConnectListener(SessionConnectedEvent event) {
+		logger.info("[WS] Received a new web socket connection");
+	}
 
-        String username = (String) headerAccessor.getSessionAttributes().get("username");
-        if(username != null) {
-            logger.info("User Disconnected : " + username);
+	@EventListener
+	public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
+		StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setType(ChatMessage.MessageType.LEAVE);
-            chatMessage.setSender(username);
+		String username = (String) headerAccessor.getSessionAttributes().get("username");
+		if (username != null) {
+			logger.info("[WS] User Disconnected : " + username);
 
-            messagingTemplate.convertAndSend("/topic/public", chatMessage);
-        }
-    }
+			Message message = new Message();
+			message.setType(MessageType.LEAVE);
+			message.setUsername(username);
+
+			List<String> revUser = chatDAO.getRevUserJoin(username, 0);
+			revUser.forEach(u -> messagingTemplate.convertAndSend("/topic/" + u, message));
+		}
+	}
 }

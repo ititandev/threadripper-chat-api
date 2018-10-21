@@ -12,8 +12,8 @@ import javax.sql.DataSource;
 
 import org.ititandev.mapper.ConversationMapper;
 import org.ititandev.mapper.MessageMapper;
+import org.ititandev.mapper.StringMapper;
 import org.ititandev.mapper.UserConversationMapper;
-import org.ititandev.mapper.UserSearchMapper;
 import org.ititandev.model.Conversation;
 import org.ititandev.model.Message;
 import org.ititandev.model.UserConversation;
@@ -149,6 +149,20 @@ public class ChatDAO {
 	public int setFileFilename(String filename, int fileId) {
 		String sql = "UPDATE file SET filename = ? WHERE fileId = ?";
 		return jdbcTemplate.update(sql, filename, fileId);
+	}
+
+	public List<String> getRevUserJoin(String username, int online) {
+		String sql = "UPDATE `user` SET `online` = ? WHERE username = ?";
+		jdbcTemplate.update(sql, online, username);
+
+		sql = "SELECT DISTINCT username FROM conversation WHERE conversationId IN "
+				+ "(SELECT DISTINCT conversationId FROM conversation WHERE username = ?)";
+		return jdbcTemplate.query(sql, new Object[] { username }, new StringMapper());
+	}
+
+	public List<String> getRevUser(String conversationId) {
+		String sql = "SELECT DISTINCT username FROM conversation WHERE conversationId = ?";
+		return jdbcTemplate.query(sql, new Object[] { conversationId }, new StringMapper());
 	}
 
 }

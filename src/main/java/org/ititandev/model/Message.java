@@ -1,9 +1,7 @@
 package org.ititandev.model;
 
-import java.util.Date;
-
 public class Message {
-	
+
 	String messageId;
 	String type;
 	String content;
@@ -11,6 +9,15 @@ public class Message {
 	String conversationId;
 	String username;
 	Boolean read;
+	String token;
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	public String getType() {
 		return type;
@@ -26,6 +33,12 @@ public class Message {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	@Override
+	public String toString() {
+		return "Message [messageId=" + messageId + ", type=" + type + ", content=" + content + ", datetime=" + datetime
+				+ ", conversationId=" + conversationId + ", username=" + username + ", read=" + read + "]";
 	}
 
 	public String getDatetime() {
@@ -66,14 +79,5 @@ public class Message {
 
 	public void setRead(Boolean read) {
 		this.read = read;
-	}
-
-	public static class MessageType {
-		public static final String JOIN = "JOIN";
-		public static final String LEAVE = "LEAVE";
-		public static final String TEXT = "TEXT";
-		public static final String IMAGE = "IMAGE";
-		public static final String FILE = "FILE";
-		public static final String CALL = "CALL";
 	}
 }

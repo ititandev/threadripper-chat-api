@@ -1,28 +1,73 @@
 package org.ititandev.controller;
 
-import org.ititandev.model.ChatMessage;
+import java.util.List;
+
+import org.ititandev.Application;
+import org.ititandev.dao.ChatDAO;
+import org.ititandev.model.Message;
+import org.ititandev.model.MessageType;
+import org.ititandev.security.TokenHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class WebsocketController {
+	@Autowired
+	private SimpMessageSendingOperations messagingTemplate;
 
-	@MessageMapping("/chat.sendMessage")
-	@SendTo("/topic/public")
-	public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
-		return chatMessage;
-	}
+	static ChatDAO chatDAO = Application.context.getBean("ChatDAO", ChatDAO.class);
+	TokenHandler tokenHandler = new TokenHandler();
 
-	@MessageMapping("/chat.addUser")
-	@SendTo("/topic/public")
-	public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-		// Add username in web socket session
-		headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-		System.out.println("/chat.addUser  " + chatMessage.getSender());
-		return chatMessage;
+	private static final Logger logger = LoggerFactory.getLogger(WebSocketEventListener.class);
+
+	@MessageMapping("/sendMessage")
+	public void sendMessage(@Payload Message mes, SimpMessageHeaderAccessor headerAccessor) {
+		String username;
+		try {
+			username = tokenHandler.parse(mes.getToken());
+			if (tokenHandler.isExpired(mes.getToken())) {
+				messagingTemplate.convertAndSend("/topic/" + username, "{\"error\": \"Unauthorized\"}");
+				return;
+			}
+		} catch (Exception e) {
+			username = mes.getUsername();
+		}
+		mes.setToken("");
+		
+		List<String> revUser;
+		logger.info("[WS] " + mes.getType() + ": " + username + ": " + mes.getContent());
+		System.out.println(mes.toString());
+
+		switch (mes.getType()) {
+		case MessageType.JOIN:
+			headerAccessor.getSessionAttributes().put("username", username);
+
+			revUser = chatDAO.getRevUserJoin(username, 1);
+			revUser.forEach(u -> messagingTemplate.convertAndSend("/topic/" + u, mes));
+			break;
+
+		case MessageType.TEXT:
+		case MessageType.IMAGE:
+		case MessageType.FILE:
+			revUser = chatDAO.getRevUser(mes.getConversationId());
+			revUser.forEach(u -> messagingTemplate.convertAndSend("/topic/" + u, mes));
+			break;
+
+		case MessageType.READ:
+
+			break;
+
+		default:
+			 messagingTemplate.convertAndSend("/topic/" + username, "{\"error\": \"Unknown type\"}");
+			break;
+		}
+
 	}
 
 }
