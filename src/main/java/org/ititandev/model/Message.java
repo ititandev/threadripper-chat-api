@@ -35,10 +35,13 @@ public class Message {
 		this.content = content;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "Message [messageId=" + messageId + ", type=" + type + ", content=" + content + ", datetime=" + datetime
-				+ ", conversationId=" + conversationId + ", username=" + username + ", read=" + read + "]";
+				+ ", conversationId=" + conversationId + ", username=" + username + ", read=" + read + ", token="
+				+ token + "]";
 	}
 
 	public String getDatetime() {

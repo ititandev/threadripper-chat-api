@@ -10,6 +10,8 @@ var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
 var username = null;
+var conversationId = null;
+var token = null;
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -18,9 +20,14 @@ var colors = [
 
 function connect(event) {
     username = document.querySelector('#name').value.trim();
-
+    conversationId = document.querySelector('#conversationId').value.trim();
+    token = document.querySelector('#token').value.trim();
+    if (token == "")
+    	token = null;
+    
     if(username) {
         usernamePage.classList.add('hidden');
+        document.getElementById("tit").innerHTML = "Username: " + username + ", ConversationId: " + conversationId;
         chatPage.classList.remove('hidden');
 
         var socket = new SockJS('/ws');
@@ -59,8 +66,9 @@ function sendMessage(event) {
         var chatMessage = {
         	username: username,
             content: messageInput.value,
-            conversationId: 6,
-            type: 'TEXT'
+            conversationId: conversationId,
+            type: 'TEXT',
+            token: token
         };
 
         stompClient.send("/queue/sendMessage", {}, JSON.stringify(chatMessage));

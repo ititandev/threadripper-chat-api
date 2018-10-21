@@ -38,11 +38,10 @@ public class WebsocketController {
 		} catch (Exception e) {
 			username = mes.getUsername();
 		}
+		mes.setUsername(username);
 		mes.setToken("");
-		
+		Message revMessage = mes;
 		List<String> revUser;
-		logger.info("[WS] " + mes.getType() + ": " + username + ": " + mes.getContent());
-		System.out.println(mes.toString());
 
 		switch (mes.getType()) {
 		case MessageType.JOIN:
@@ -55,8 +54,13 @@ public class WebsocketController {
 		case MessageType.TEXT:
 		case MessageType.IMAGE:
 		case MessageType.FILE:
-			revUser = chatDAO.getRevUser(mes.getConversationId());
-			revUser.forEach(u -> messagingTemplate.convertAndSend("/topic/" + u, mes));
+			revMessage = chatDAO.insertMessage(mes);
+			Message temp = revMessage;
+			revUser = chatDAO.getRevUser(username, revMessage.getConversationId());
+			if (revUser.size() == 0) {
+				messagingTemplate.convertAndSend("/topic/" + username, "{\"error\": \"Error conversation\"}");
+			}
+			revUser.forEach(u -> messagingTemplate.convertAndSend("/topic/" + u, temp));
 			break;
 
 		case MessageType.READ:
@@ -64,9 +68,12 @@ public class WebsocketController {
 			break;
 
 		default:
-			 messagingTemplate.convertAndSend("/topic/" + username, "{\"error\": \"Unknown type\"}");
+			messagingTemplate.convertAndSend("/topic/" + username, "{\"error\": \"Unknown type\"}");
 			break;
 		}
+
+		logger.info("[WS] " + revMessage.getType() + ": " + username + ": " + revMessage.getContent());
+		System.out.println(revMessage.toString());
 
 	}
 

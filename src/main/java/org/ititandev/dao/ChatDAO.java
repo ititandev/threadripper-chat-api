@@ -3,7 +3,11 @@ package org.ititandev.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -160,9 +164,35 @@ public class ChatDAO {
 		return jdbcTemplate.query(sql, new Object[] { username }, new StringMapper());
 	}
 
-	public List<String> getRevUser(String conversationId) {
+	public List<String> getRevUser(String username, String conversationId) {
+		if (!checkConversationId(username, conversationId))
+			return new ArrayList<String>();
 		String sql = "SELECT DISTINCT username FROM conversation WHERE conversationId = ?";
 		return jdbcTemplate.query(sql, new Object[] { conversationId }, new StringMapper());
+	}
+
+	public Message insertMessage(Message mes) {
+		Date currentTime = new Date();
+		String sql = "INSERT INTO message (`conversationId`,`username`,`type`,`content`, `datetime`) " + 
+					"VALUES (?, ?, ?, ?, ?)";
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		String datetime = new SimpleDateFormat("YYYY-MM-dd HH:MM:ss").format(currentTime);
+
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "messageId", "datetime" });
+				ps.setString(1, mes.getConversationId());
+				ps.setString(2, mes.getUsername());
+				ps.setString(3, mes.getToken());
+				ps.setString(4, mes.getContent());
+				ps.setString(5, datetime);
+				return ps;
+			}
+		}, keyHolder);
+		mes.setMessageId(keyHolder.getKey().toString());
+		mes.setDatetime(datetime);
+		return mes;
 	}
 
 }
