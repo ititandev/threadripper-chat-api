@@ -22,12 +22,21 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
 		registry.setApplicationDestinationPrefixes("/queue");
-		registry.enableSimpleBroker("/topic"); // Enables a simple in-memory broker
+//		registry.enableSimpleBroker("/topic"); // Enables a simple in-memory broker
 
 		/* Use this for enabling a Full featured broker like RabbitMQ
 		 * registry.enableStompBrokerRelay("/topic") .setRelayHost("localhost")
 		 * .setRelayPort(61613) .setClientLogin("guest") .setClientPasscode("guest");
 		 */
+	    
+		registry.enableStompBrokerRelay("/topic")
+		.setRelayHost("localhost")
+	    .setRelayPort(61613)
+	    .setClientLogin("guest")
+	    .setClientPasscode("guest");
+	    
+	    
+//	    http://localhost:15672/#/
 	}
 
 	@Override

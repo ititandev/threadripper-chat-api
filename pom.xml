@@ -30,7 +30,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
-
+		
+		<!--  For rabbitMQ -->
+		<dependency>
+		  <groupId>io.projectreactor</groupId>
+		  <artifactId>reactor-net</artifactId>
+		  </dependency>
+		<dependency>
+		  <groupId>io.projectreactor</groupId>
+		  <artifactId>reactor-core</artifactId>
+		  </dependency>
+		<dependency>
+		  <groupId>io.netty</groupId>
+		  <artifactId>netty-all</artifactId>
+		  <version>4.0.33.Final</version>
+		</dependency>
 		
 		<dependency>
 		    <groupId>org.springframework</groupId>
