@@ -9,6 +9,9 @@ import org.simplejavamail.mailer.config.TransportStrategy;
 
 public class MailService {
 	public static void sendMail(String to, String subject, String body) {
+		System.out.println("to:" + to);
+		System.out.println("subject:" + subject);
+//		System.out.println("body:" + body);
 		Email email = EmailBuilder.startingBlank()
 				.from("Threadripper Chat System", Config.getConfig("mail.username") + "@gmail.com").to("User", to)
 				.withSubject(subject).withHTMLText(body).buildEmail();

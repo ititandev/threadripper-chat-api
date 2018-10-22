@@ -79,15 +79,15 @@ public class UserController {
 		int result = 0;
 		try {
 			String encoded_password = passwordEncoder.encode(password);
-			result = userDAO.insert(username, encoded_password, email, displayName, 0);
+			result = userDAO.insert(username, encoded_password, email, displayName, 1);
 		} catch (DuplicateKeyException e) {
 			response.sendError(409, "Username has been used");
 			return null;
 		}
 		if (result == 1) {
-			String verify = userDAO.getVerifyLink(username);
-			String to = userDAO.getEmail(username);
-			MailService.sendMail(to, "Threadripper: Verify account", verifyBody.replace("{{action_url}}", verify));
+//			String verify = userDAO.getVerifyLink(username);
+//			String to = userDAO.getEmail(username);
+//			MailService.sendMail(to, "Threadripper: Verify account", verifyBody.replace("{{action_url}}", verify));
 			return "{\"success\": true}";
 		} else
 			response.sendError(520, "Some error has occurred");
@@ -111,16 +111,6 @@ public class UserController {
 			return null;
 		}
 		if (result == 1) {
-			// String body1 = new
-			// String(Files.readAllBytes(Paths.get(Config.getConfig("mail.verify.path1"))),
-			// StandardCharsets.UTF_8);
-			// String body2 = new
-			// String(Files.readAllBytes(Paths.get(Config.getConfig("mail.verify.path2"))),
-			// StandardCharsets.UTF_8);
-			// String verify = userDAO.getVerifyLink(json.getString("username"));
-			// String email = userDAO.getEmail(json.getString("username"));
-			// MailService.sendMail(email, "Threadripper: Verify account", body1 + verify +
-			// body2);
 			return "{\"success\": true}";
 		} else
 			response.sendError(520, "Some error has occurred");
@@ -132,7 +122,7 @@ public class UserController {
 		String verify = userDAO.getVerifyLink(username);
 		String email = userDAO.getEmail(username);
 		MailService.sendMail(email, "Threadripper: Verify account", verifyBody.replace("{{action_url}}", verify));
-		return new HashMap<>().put("success", true);
+		return "{\"result\": \"success\"}";
 	}
 
 	@GetMapping("/api/verify/{username}/{hash}")
@@ -141,7 +131,7 @@ public class UserController {
 	}
 
 	@GetMapping("/api/forgot/{username}")
-	public void forgotPassword(@PathVariable("username") String username) {
+	public Object forgotPassword(@PathVariable("username") String username) {
 		int leftLimit = 97; // letter 'a'
 		int rightLimit = 122; // letter 'z'
 		int targetStringLength = 5;
@@ -156,6 +146,7 @@ public class UserController {
 		userDAO.updatePassword(username, passwordEncoder.encode(newPassword));
 		MailService.sendMail(userDAO.getEmail(username), "Threadripper: Forgot password",
 				forgotBody.replace("{{newpass}}", newPassword));
+		return "{\"result\": \"success\", \"newPassword\": " + newPassword + "}";
 	}
 
 	@PutMapping("/api/password")
