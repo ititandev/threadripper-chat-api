@@ -49,12 +49,12 @@ public class UserDAO {
 		String sql = "SELECT displayName FROM user WHERE username = ?";
 		return jdbcTemplate.queryForList(sql, username).get(0).get("displayName").toString();
 	}
-	public int insert(String username, String password, String email, String displayName) {
-		String sql = "INSERT INTO user VALUES (?, ?, ?, 1, 0, NOW(), NOW(), ?, ?, 0)";
+	public int insert(String username, String password, String email, String displayName, int active) {
+		String sql = "INSERT INTO user VALUES (?, ?, ?, ?, 0, NOW(), NOW(), ?, ?, 0)";
 		Random rand = new Random();
 		Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 		String hash = encoder.encodePassword(String.valueOf(rand.nextInt(1000000)), "hash");
-		return jdbcTemplate.update(sql, username, password, email, displayName, hash);
+		return jdbcTemplate.update(sql, username, password, email, active, displayName, hash);
 	}
 
 	public int updateInfo(String username, UserReg userReg) {
@@ -92,7 +92,7 @@ public class UserDAO {
 	}
 
 	public String verify(String username, String hash) {
-		String sql = "SELECT COUNT(*) AS count FROM user WHERE username = ? AND verify_code = ?";
+		String sql = "SELECT COUNT(1) AS count FROM user WHERE username = ? AND hash = ?";
 		int count = Integer.valueOf(jdbcTemplate.queryForList(sql, username, hash).get(0).get("count").toString());
 		if (count == 1) {
 			String sql2 = "UPDATE user SET active = 1 WHERE username = ?";
@@ -106,7 +106,7 @@ public class UserDAO {
 	public String getVerifyLink(String username) {
 		String sql = "SELECT hash FROM user WHERE username = ?";
 		Map<String, Object> result = jdbcTemplate.queryForList(sql, username).get(0);
-		return Config.getConfig("hostname") + "/api/verify/" + username + "/" + result.get("verify_code");
+		return Config.getConfig("hostname") + "/api/verify/" + username + "/" + result.get("hash");
 	}
 
 	public String getEmail(String username) {

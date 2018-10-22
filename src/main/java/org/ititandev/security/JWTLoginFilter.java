@@ -63,7 +63,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 					StandardCharsets.UTF_8);
 			String verify = userDAO.getVerifyLink(username);
 			String email = userDAO.getEmail(username);
-			MailService.sendMail(email, "Threadripper: Verify account", body1 + verify + body2);
+			MailService.sendMail( email, "Threadripper: Verify account", body1 + verify + body2);
 		}
 		currentUser.put("avatarUrl", currentUser.get("avatarUrl"));
 		currentUser.remove("active");

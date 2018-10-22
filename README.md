@@ -120,6 +120,11 @@
     }
 ```
 
+### `GET /api/verify/{username}/{hash}`
+**Email will be sent automatically if user is not active**
+### `GET /api/verify/resend/{username}`
+### `GET /api/forgot/{username}`
+
 ### `PUT /api/password?oldPassword=&newPassword=`
 ```
 input:  token in Authorization header
@@ -407,35 +412,3 @@ GET /api/forget?username=
 
 
 
-    
-
-
-
-
-
-SEND /conversation/{conversationId}
-
-SUBCRIBE /topic/{username}
-
-
-
-
-
-```
-Message:
-    type: JOIN, LEAVE, TEXT, IMAGE, FILE, CALL
-    content: null/...
-    datetime: 
-    conversationId:
-    fromUsername:
-```
-```
-User:
-    username
-    photoUrl
-    displayName
-    username
-    password
-    email
-    online
-```
