@@ -38,11 +38,14 @@ public class UserController {
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@GetMapping("/")
-	public FileSystemResource root(HttpServletResponse response) throws IOException {
+	public Object root(HttpServletResponse response) throws IOException {
 		response.setContentType(MediaType.ALL_VALUE);
 		String filename = "threadripper.apk";
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-		return new FileSystemResource(Config.getConfig("apk.dir") + File.separator + filename);
+		File f = new File(Config.getConfig("apk.file"));
+		if (!f.exists())
+			return "File not found";
+		return new FileSystemResource(Config.getConfig("apk.file"));
 	}
 
 	@PostMapping(value = "/api/signup")
@@ -74,11 +77,12 @@ public class UserController {
 			response.sendError(520, "Some error has occurred");
 		return null;
 	}
-	
+
 	@PostMapping(value = "/api/signup2")
 	public Object signUp2(HttpServletResponse response, @RequestParam("username") String username,
 			@RequestParam("password") String password, @RequestParam("displayName") String displayName,
-			@RequestParam("email") String email, @RequestParam("avatarUrl") String avatarUrl) throws IOException, JSONException {
+			@RequestParam("email") String email, @RequestParam("avatarUrl") String avatarUrl)
+			throws IOException, JSONException {
 		response.setContentType("application/json");
 		int result = 0;
 		try {
@@ -142,7 +146,6 @@ public class UserController {
 		userDAO.updatePassword(username, passwordEncoder.encode(username));
 	}
 
-
 	@PutMapping("/api/password")
 	public String updatePassword(HttpServletResponse response, @RequestParam("newPassword") String newPassword,
 			@RequestParam("oldPassword") String oldPassword) throws JSONException, IOException {
@@ -183,12 +186,12 @@ public class UserController {
 		}
 		return check;
 	}
-	
+
 	@GetMapping("/api/user")
 	public List<UserReg> getUserList() {
 		return userDAO.getUserList();
 	}
-	
+
 	@GetMapping(value = "/api/user", params = "search")
 	public List<UserSearch> searchUser(@RequestParam("search") String keyword) {
 		return userDAO.searchUser(keyword);
