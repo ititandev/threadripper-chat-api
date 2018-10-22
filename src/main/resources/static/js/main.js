@@ -25,7 +25,7 @@ function connect(event) {
     if (token == "")
     	token = null;
     
-    if(username) {
+    
         usernamePage.classList.add('hidden');
         document.getElementById("tit").innerHTML = "Username: " + username + ", ConversationId: " + conversationId;
         chatPage.classList.remove('hidden');
@@ -34,7 +34,7 @@ function connect(event) {
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected, onError);
-    }
+    
     event.preventDefault();
 }
 
@@ -61,7 +61,7 @@ function onError(error) {
 
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
-
+ 
     if(messageContent && stompClient) {
         var chatMessage = {
         	username: username,
