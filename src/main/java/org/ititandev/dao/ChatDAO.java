@@ -173,8 +173,8 @@ public class ChatDAO {
 
 	public Message insertMessage(Message mes) {
 		Date currentTime = new Date();
-		String sql = "INSERT INTO message (`conversationId`,`username`,`type`,`content`, `datetime`) " + 
-					"VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO message (`conversationId`,`username`,`type`,`content`, `datetime`) "
+				+ "VALUES (?, ?, ?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		String datetime = new SimpleDateFormat("YYYY-MM-dd HH:MM:ss").format(currentTime);
 
@@ -184,7 +184,7 @@ public class ChatDAO {
 				PreparedStatement ps = connection.prepareStatement(sql, new String[] { "messageId", "datetime" });
 				ps.setString(1, mes.getConversationId());
 				ps.setString(2, mes.getUsername());
-				ps.setString(3, mes.getToken());
+				ps.setString(3, mes.getType());
 				ps.setString(4, mes.getContent());
 				ps.setString(5, datetime);
 				return ps;
@@ -194,6 +194,11 @@ public class ChatDAO {
 		mes.setDatetime(datetime);
 		mes.setRead(false);
 		return mes;
+	}
+
+	public int markAsRead(String conversationId, String message_id) {
+		String sql = "UPDATE message SET `read` = 1 WHERE conversationId = ? AND message_id < ?";
+		return jdbcTemplate.update(sql, conversationId, message_id);
 	}
 
 }

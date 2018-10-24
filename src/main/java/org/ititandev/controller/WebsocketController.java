@@ -64,7 +64,14 @@ public class WebsocketController {
 			break;
 
 		case MessageType.READ:
-
+			revUser = chatDAO.getRevUser(username, revMessage.getConversationId());
+			chatDAO.markAsRead(mes.getConversationId(), mes.getContent());
+			
+			revUser.forEach(u -> messagingTemplate.convertAndSend("/topic/" + u, mes));
+			break;
+		case MessageType.TYPING:
+			revUser = chatDAO.getRevUser(username, revMessage.getConversationId());
+			revUser.forEach(u -> messagingTemplate.convertAndSend("/topic/" + u, mes));
 			break;
 
 		default:
