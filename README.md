@@ -171,6 +171,7 @@ input:  token in Authorization header
         }
     ]
 ```
+### `GET /api/user?search=&offset=?&limit=?`
 
 ### `POST /api/conversation`
 ```json
@@ -326,6 +327,7 @@ input: token in Authorization header
         }
     ]
 ```
+### `GET /api/message/{conversationId}?offset=?&limit=?`
 
 ### `GET /api/avatar/{filename}.{ext}`
 **Support all format** 

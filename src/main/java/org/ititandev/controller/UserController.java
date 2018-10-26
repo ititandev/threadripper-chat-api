@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import javax.mail.Message.RecipientType;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ititandev.Application;
@@ -20,12 +18,6 @@ import org.ititandev.model.UserSearch;
 import org.ititandev.security.TokenHandler;
 import org.ititandev.service.MailService;
 import org.json.JSONException;
-import org.simplejavamail.email.Email;
-import org.simplejavamail.email.EmailBuilder;
-import org.simplejavamail.mailer.Mailer;
-import org.simplejavamail.mailer.MailerBuilder;
-import org.simplejavamail.mailer.MailerBuilder.MailerRegularBuilder;
-import org.simplejavamail.mailer.config.TransportStrategy;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
@@ -197,6 +189,10 @@ public class UserController {
 
 	@GetMapping(value = "/api/user", params = "search")
 	public List<UserSearch> searchUser(@RequestParam("search") String keyword) {
-		return userDAO.searchUser(keyword);
+		return userDAO.searchUser(keyword, 0, 20);
+	}
+	@GetMapping(value = "/api/user", params = {"search", "offset", "limit"})
+	public List<UserSearch> searchUserLimit(@RequestParam("search") String keyword, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+		return userDAO.searchUser(keyword, offset, limit);
 	}
 }

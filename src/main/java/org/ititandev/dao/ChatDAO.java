@@ -90,9 +90,9 @@ public class ChatDAO {
 			return "0";
 	}
 
-	public List<Message> getMessage(String conversationId) {
-		String sql = "SELECT * FROM message WHERE conversationId = ? ORDER BY messageId DESC";
-		return jdbcTemplate.query(sql, new Object[] { conversationId }, new MessageMapper());
+	public List<Message> getMessage(String conversationId, int offset, int limit) {
+		String sql = "SELECT * FROM message WHERE conversationId = ? ORDER BY messageId DESC LIMIT ?, ?";
+		return jdbcTemplate.query(sql, new Object[] { conversationId, offset, limit }, new MessageMapper());
 	}
 
 	public boolean checkConversationId(String username, String conversationId) {

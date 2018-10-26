@@ -40,15 +40,17 @@ public class UserDAO {
 		List<UserReg> empList = jdbcTemplate.query(query, new UserMapper());
 		return empList;
 	}
-	
+
 	public Map<String, Object> getCurrentUserInfo(String username) {
 		String sql = "SELECT displayName, getAvatar(username) as avatarUrl, username, email, active FROM user WHERE username = ?";
 		return jdbcTemplate.queryForList(sql, username).get(0);
 	}
+
 	public String getDisplayName(String username) {
 		String sql = "SELECT displayName FROM user WHERE username = ?";
 		return jdbcTemplate.queryForList(sql, username).get(0).get("displayName").toString();
 	}
+
 	public int insert(String username, String password, String email, String displayName, int active) {
 		String sql = "INSERT INTO user VALUES (?, ?, ?, ?, 0, NOW(), NOW(), ?, ?, 0)";
 		Random rand = new Random();
@@ -114,11 +116,11 @@ public class UserDAO {
 		return jdbcTemplate.queryForList(sql, username).get(0).get("email").toString();
 	}
 
-	public List<UserSearch> searchUser(String keyword) {
+	public List<UserSearch> searchUser(String keyword, int offset, int limit) {
 		String sql = "SELECT user.username, displayName, email, " + "getAvatar(user.username) AS avatarUrl, online "
 				+ "FROM user WHERE (user.username LIKE '%" + keyword + "%' OR " + "email LIKE '%" + keyword
-				+ "%' OR displayName LIKE '%" + keyword + "%') LIMIT 0, 20";
-		return jdbcTemplate.query(sql, new Object[] {}, new UserSearchMapper());
+				+ "%' OR displayName LIKE '%" + keyword + "%') LIMIT ?, ?";
+		return jdbcTemplate.query(sql, new Object[] { offset, limit }, new UserSearchMapper());
 	}
 
 	public Boolean addFriend(String currentUser, String username) {
@@ -130,7 +132,7 @@ public class UserDAO {
 
 	public List<UserReg> getUserList() {
 		String sql = "SELECT * FROM user";
-		return jdbcTemplate.query(sql, new Object[] {  }, new UserMapper());
+		return jdbcTemplate.query(sql, new Object[] {}, new UserMapper());
 	}
 
 	public Integer insertAvatar(String username) {
@@ -147,7 +149,7 @@ public class UserDAO {
 		}, keyHolder);
 		return Integer.valueOf(keyHolder.getKey().toString());
 	}
-	
+
 	public int setAvatarFilename(String avatarUrl, int avatarId) {
 		String sql = "UPDATE avatar SET avatarUrl = ? WHERE avatar_id = ?";
 		return jdbcTemplate.update(sql, avatarUrl, avatarId);
