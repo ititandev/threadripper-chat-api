@@ -11,6 +11,12 @@
       <property name = "url" value = "jdbc:mysql://localhost:3306/threadripper"/>
       <property name = "username" value = "root"/>
       <property name = "password" value = "GTX980TiITitan!"/>
+      <property name="connectionProperties">
+            <props>
+                <prop key="useUnicode">yes</prop>
+                <prop key="characterEncoding">utf8</prop>
+            </props>
+        </property>
    </bean>
 
    

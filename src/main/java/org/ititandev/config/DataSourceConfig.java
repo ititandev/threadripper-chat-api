@@ -13,7 +13,7 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.url("jdbc:mysql://127.0.0.1:3306/threadripper");
+        dataSourceBuilder.url("jdbc:mysql://127.0.0.1:3306/threadripper?useUnicode=yes&characterEncoding=UTF-8");
         dataSourceBuilder.driverClassName("com.mysql.jdbc.Driver");
         dataSourceBuilder.username(Config.getConfig("mysql.username"));
         dataSourceBuilder.password(Config.getConfig("mysql.password"));
