@@ -176,7 +176,7 @@ public class ChatDAO {
 		String sql = "INSERT INTO message (`conversationId`,`username`,`type`,`content`, `datetime`) "
 				+ "VALUES (?, ?, ?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		String datetime = new SimpleDateFormat("YYYY-MM-dd HH:MM:ss").format(currentTime);
+		String datetime = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(currentTime);
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			@Override
