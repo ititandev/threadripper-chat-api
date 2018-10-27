@@ -40,7 +40,6 @@ CREATE TABLE `avatar` (
 
 LOCK TABLES `avatar` WRITE;
 /*!40000 ALTER TABLE `avatar` DISABLE KEYS */;
-INSERT INTO `avatar` VALUES (7,'vre.hcmut.edu.vn/threadripper/api/avatar/7.png','a','2018-10-20 01:01:48'),(8,'vre.hcmut.edu.vn/threadripper/api/avatar/8.png','a','2018-10-20 01:01:54'),(9,'vre.hcmut.edu.vn/threadripper/api/avatar/9.png','a','2018-10-20 01:05:43'),(10,'vre.hcmut.edu.vn/threadripper/api/avatar/10.bmp','a','2018-10-20 01:33:28'),(16,'vre.hcmut.edu.vn/threadripper/api/avatar/16.jpg','a','2018-10-20 12:32:28'),(17,'https://www.w3schools.com/w3css/img_lights.jpg','test3','2018-10-20 12:33:29');
 /*!40000 ALTER TABLE `avatar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +79,7 @@ CREATE TABLE `conversation_setting` (
   `conversationId` int(11) NOT NULL AUTO_INCREMENT,
   `conversationName` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`conversationId`),
-  CONSTRAINT `fk_conversationId` FOREIGN KEY (`conversationId`) REFERENCES `conversation` (`conversationid`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_conversationIdToConvId` FOREIGN KEY (`conversationId`) REFERENCES `conversation` (`conversationid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -115,7 +114,6 @@ CREATE TABLE `file` (
 
 LOCK TABLES `file` WRITE;
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
-INSERT INTO `file` VALUES (1,'1.','2018-10-20 01:26:13'),(2,'2.apk','2018-10-20 01:27:05'),(3,'3.py','2018-10-20 12:38:12');
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +138,6 @@ CREATE TABLE `image` (
 
 LOCK TABLES `image` WRITE;
 /*!40000 ALTER TABLE `image` DISABLE KEYS */;
-INSERT INTO `image` VALUES (1,NULL,'2018-10-20 01:13:17'),(2,'2.jpg','2018-10-20 01:16:31');
 /*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +159,7 @@ CREATE TABLE `message` (
   PRIMARY KEY (`messageId`),
   KEY `fk_convIdToConvId_idx` (`conversationId`),
   CONSTRAINT `fk_convIdToConvId` FOREIGN KEY (`conversationId`) REFERENCES `conversation` (`conversationid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -266,4 +263,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-28  1:23:48
+-- Dump completed on 2018-10-28  2:07:50
