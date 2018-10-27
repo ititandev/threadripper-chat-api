@@ -104,7 +104,8 @@ public class ChatDAO {
 	public Conversation getConversationWithId(String conversationId) {
 		String sql = "SELECT DISTINCT conversation.conversationId, conversationName, "
 				+ "getNotiCount(conversation.conversationId) AS notiCount, messageId, `type`, "
-				+ "content, `datetime`, mes.username, `read` FROM conversation INNER JOIN conversation_setting LEFT JOIN "
+				+ "content, `datetime`, mes.username, `read` FROM conversation INNER JOIN conversation_setting "
+				+ "ON conversation.conversationId = conversation_setting.conversationId LEFT JOIN "
 				+ "(SELECT conversationId, messageId, content, `type`, username, `datetime`, `read` "
 				+ "FROM message WHERE messageId IN (SELECT MAX(messageId) as id FROM message GROUP BY conversationId)) AS mes "
 				+ "ON conversation.conversationId = mes.conversationId WHERE conversation.conversationId = ?";
