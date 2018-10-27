@@ -90,6 +90,8 @@ function onMessageReceived(payload) {
     } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
         message.content = message.username + ' left!';
+      else if (message.type === 'TYPING') {
+      
     } else {
     	if (message.conversationId != conversationId)
     		return;
