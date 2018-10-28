@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,22 @@ public class ChatController {
 		}
 	}
 
+	@DeleteMapping("/api/conversation/{conversationId}")
+	public Object deleteConversation(Authentication auth, @PathVariable("conversationId") String conversationId,
+			HttpServletResponse res) throws IOException {
+		if (!chatDAO.checkConversationId(auth.getName(), conversationId)) {
+			res.sendError(520, "User does not have access privileges");
+			return null;
+		}
+
+		if (chatDAO.deleteConversation(conversationId) > 0)
+			return "{\"result\": \"success\"}";
+		else {
+			res.sendError(520, "Some error has occurred");
+			return null;
+		}
+	}
+
 	@PostMapping(value = "/api/conversation")
 	public Object addConversation(@RequestBody String body, HttpServletResponse res) throws JSONException, IOException {
 		JSONArray json = new JSONObject(body).getJSONArray("listUsername");
@@ -72,10 +89,11 @@ public class ChatController {
 			return null;
 		}
 	}
-	
-	@GetMapping(value = "/api/message/{conversationId}", params = {"offset", "limit"})
+
+	@GetMapping(value = "/api/message/{conversationId}", params = { "offset", "limit" })
 	public Object getMessageLimit(@PathVariable("conversationId") String conversationId, HttpServletResponse res,
-			Authentication auth, @RequestParam("limit") int limit, @RequestParam("offset") int offset) throws IOException {
+			Authentication auth, @RequestParam("limit") int limit, @RequestParam("offset") int offset)
+			throws IOException {
 		if (chatDAO.checkConversationId(auth.getName(), conversationId))
 			return chatDAO.getMessage(conversationId, offset, limit);
 		else {

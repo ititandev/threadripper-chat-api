@@ -203,4 +203,9 @@ public class ChatDAO {
 		return jdbcTemplate.update(sql, conversationId, message_id);
 	}
 
+	public int deleteConversation(String conversationId) {
+		String sql = "DELETE FROM conversation_setting WHERE conversationId = ?";
+		return jdbcTemplate.update(sql, conversationId);
+	}
+
 }

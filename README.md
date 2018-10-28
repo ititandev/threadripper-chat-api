@@ -291,6 +291,16 @@ input: token in Authorization header
 }
 ```
 
+### `DELETE /api/conversation/{conversationId}`
+```json
+input: token in Authorization header
+```
+```json
+->  {
+        "result": "success"
+    }
+```
+
 ### `GET /api/message/{conversationId}`
 
 ```json

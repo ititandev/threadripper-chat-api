@@ -54,7 +54,8 @@ CREATE TABLE `conversation` (
   `conversationId` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `nickname` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`conversationId`,`username`)
+  PRIMARY KEY (`conversationId`,`username`),
+  CONSTRAINT `fk_convIdToConvIdSet` FOREIGN KEY (`conversationId`) REFERENCES `conversation_setting` (`conversationid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -78,8 +79,7 @@ DROP TABLE IF EXISTS `conversation_setting`;
 CREATE TABLE `conversation_setting` (
   `conversationId` int(11) NOT NULL AUTO_INCREMENT,
   `conversationName` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`conversationId`),
-  CONSTRAINT `fk_conversationIdToConvId` FOREIGN KEY (`conversationId`) REFERENCES `conversation` (`conversationid`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`conversationId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -158,7 +158,7 @@ CREATE TABLE `message` (
   `read` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`messageId`),
   KEY `fk_convIdToConvId_idx` (`conversationId`),
-  CONSTRAINT `fk_convIdToConvId` FOREIGN KEY (`conversationId`) REFERENCES `conversation` (`conversationid`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_convIdToConvId` FOREIGN KEY (`conversationId`) REFERENCES `conversation_setting` (`conversationid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -263,4 +263,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-28  2:07:50
+-- Dump completed on 2018-10-28  7:42:08
