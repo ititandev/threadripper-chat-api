@@ -260,6 +260,59 @@ input: token in Authorization header
 ]
 ```
 
+### `GET /api/friend`
+```json
+input: token in Authorization header
+```
+```json
+[
+    {
+        "conversationId": "1",
+        "conversationName": "NameOfAB",
+        "lastMessage": null,
+        "listUser": [
+            {
+                "displayName": "userA",
+                "username": "a",
+                "nickname": null,
+                "avatarUrl": "vre.hcmut.edu.vn/threadripper/api/avatar/default.jpg",
+                "online": false
+            },
+            {
+                "displayName": "userB",
+                "username": "b",
+                "nickname": null,
+                "avatarUrl": "vre.hcmut.edu.vn/threadripper/api/avatar/default.jpg",
+                "online": false
+            }
+        ],
+        "notiCount": 0
+    },
+    {
+        "conversationId": "2",
+        "conversationName": "NameOfBC",
+        "lastMessage": null,
+        "listUser": [
+            {
+                "displayName": "userB",
+                "username": "b",
+                "nickname": null,
+                "avatarUrl": "vre.hcmut.edu.vn/threadripper/api/avatar/default.jpg",
+                "online": false
+            },
+            {
+                "displayName": "userC",
+                "username": "c",
+                "nickname": null,
+                "avatarUrl": "vre.hcmut.edu.vn/threadripper/api/avatar/default.jpg",
+                "online": false
+            }
+        ],
+        "notiCount": 0
+    }
+]
+```
+
 ### `GET /api/conversation/{conversationId}`
 ```json
 input: token in Authorization header
