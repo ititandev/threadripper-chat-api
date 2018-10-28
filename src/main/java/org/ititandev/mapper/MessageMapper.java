@@ -16,7 +16,6 @@ public class MessageMapper implements RowMapper<Message> {
 		message.setDatetime(rs.getString("datetime"));
 		message.setConversationId(rs.getString("conversationId"));
 		message.setUsername(rs.getString("username"));
-		message.setRead(rs.getBoolean("read"));
 		return message;
 	}
 }

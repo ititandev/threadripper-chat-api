@@ -48,7 +48,7 @@ public class ChatController {
 			@PathVariable("conversationId") String conversationId, HttpServletResponse res) throws IOException {
 
 		if (chatDAO.checkConversationId(auth.getName(), conversationId))
-			return chatDAO.getConversationWithId(conversationId);
+			return chatDAO.getConversationWithId(conversationId, auth.getName());
 		else {
 			res.sendError(520, "User does not have access privileges");
 			return null;

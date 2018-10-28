@@ -22,7 +22,6 @@ public class ConversationMapper implements RowMapper<Conversation> {
 			lastMessage.setContent(rs.getString("content"));
 			lastMessage.setDatetime(rs.getString("datetime"));
 			lastMessage.setType(rs.getString("type"));
-			lastMessage.setRead(rs.getBoolean("read"));
 			lastMessage.setUsername(rs.getString("username"));
 		}
 		conversation.setLastMessage(lastMessage);

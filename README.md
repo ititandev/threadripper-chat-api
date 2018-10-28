@@ -30,7 +30,6 @@
     "datetime":null,
     "conversationId":null,
     "username":"a",
-    "read": null,
     "token":""}
 ```
 ```json
@@ -41,7 +40,6 @@
     "datetime":null,
     "conversationId":null,
     "username":"b",
-    "read":null,
     "token":null
 }
 ```
@@ -53,7 +51,6 @@
     "datetime":"2018-10-22 03:10:34",
     "conversationId":"1",
     "username":"b",
-    "read":false,
     "token":""
 }
 ```
@@ -305,7 +302,6 @@ input: token in Authorization header
         "datetime": "2018-10-19 14:22:18",
         "conversationId": "2",
         "username": "b",
-        "read": false
     },
     "listUser": [
         {
@@ -359,8 +355,7 @@ input: token in Authorization header
             "content": "2",
             "datetime": "2018-10-19",
             "conversationId": "2",
-            "username": "b",
-            "read": false
+            "username": "b"
         },
         {
             "messageId": "1",
@@ -368,8 +363,7 @@ input: token in Authorization header
             "content": "1",
             "datetime": "2018-10-19",
             "conversationId": "2",
-            "username": "a",
-            "read": true
+            "username": "a"
         }
     ]
 ```

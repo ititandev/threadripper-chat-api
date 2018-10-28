@@ -38,13 +38,14 @@ public class ChatDAO {
 
 	public List<Conversation> getConversation(String username) {
 		String sql = "SELECT DISTINCT conversation.conversationId, conversationName, "
-				+ "getNotiCount(conversation.conversationId) AS notiCount, messageId, `type`, "
-				+ "content, `datetime`, mes.username, `read` FROM conversation INNER JOIN conversation_setting "
+				+ "getNotiCount(conversation.conversationId, ?) AS notiCount, messageId, `type`, "
+				+ "content, `datetime`, mes.username FROM conversation INNER JOIN conversation_setting "
 				+ "ON conversation.conversationId = conversation_setting.conversationId LEFT JOIN "
-				+ "(SELECT conversationId, messageId, content, `type`, username, `datetime`, `read` "
+				+ "(SELECT conversationId, messageId, content, `type`, username, `datetime` "
 				+ "FROM message WHERE messageId IN (SELECT MAX(messageId) as id FROM message GROUP BY conversationId)) AS mes "
 				+ "ON conversation.conversationId = mes.conversationId WHERE conversation.username = ?";
-		List<Conversation> list = jdbcTemplate.query(sql, new Object[] { username }, new ConversationMapper());
+		List<Conversation> list = jdbcTemplate.query(sql, new Object[] { username, username },
+				new ConversationMapper());
 		list.stream().forEach(c -> c.setListUser(getUserOfConversation(c.getConversationId())));
 
 		return list;
@@ -101,15 +102,16 @@ public class ChatDAO {
 		return jdbcTemplate.queryForList(sql, conversationId, username).get(0).get("count").toString().equals("1");
 	}
 
-	public Conversation getConversationWithId(String conversationId) {
+	public Conversation getConversationWithId(String conversationId, String username) {
 		String sql = "SELECT DISTINCT conversation.conversationId, conversationName, "
-				+ "getNotiCount(conversation.conversationId) AS notiCount, messageId, `type`, "
-				+ "content, `datetime`, mes.username, `read` FROM conversation INNER JOIN conversation_setting "
+				+ "getNotiCount(conversation.conversationId, ?) AS notiCount, messageId, `type`, "
+				+ "content, `datetime`, mes.username FROM conversation INNER JOIN conversation_setting "
 				+ "ON conversation.conversationId = conversation_setting.conversationId LEFT JOIN "
-				+ "(SELECT conversationId, messageId, content, `type`, username, `datetime`, `read` "
+				+ "(SELECT conversationId, messageId, content, `type`, username, `datetime` "
 				+ "FROM message WHERE messageId IN (SELECT MAX(messageId) as id FROM message GROUP BY conversationId)) AS mes "
 				+ "ON conversation.conversationId = mes.conversationId WHERE conversation.conversationId = ?";
-		List<Conversation> list = jdbcTemplate.query(sql, new Object[] { conversationId }, new ConversationMapper());
+		List<Conversation> list = jdbcTemplate.query(sql, new Object[] { username, conversationId },
+				new ConversationMapper());
 		list.stream().forEach(c -> c.setListUser(getUserOfConversation(c.getConversationId())));
 		if (list.isEmpty())
 			return null;
@@ -194,13 +196,12 @@ public class ChatDAO {
 		}, keyHolder);
 		mes.setMessageId(keyHolder.getKey().toString());
 		mes.setDatetime(datetime);
-		mes.setRead(false);
 		return mes;
 	}
 
-	public int markAsRead(String conversationId, String message_id) {
-		String sql = "UPDATE message SET `read` = 1 WHERE conversationId = ? AND message_id < ?";
-		return jdbcTemplate.update(sql, conversationId, message_id);
+	public int markAsRead(String conversationId, String username, String messageId) {
+		String sql = "UPDATE conversation SET `readMessageId` = ? WHERE conversationId = ? AND username = ?";
+		return jdbcTemplate.update(sql, messageId, conversationId, username);
 	}
 
 	public int deleteConversation(String conversationId) {
@@ -210,19 +211,19 @@ public class ChatDAO {
 
 	public List<Conversation> getFriend(String username) {
 		String sql = "SELECT DISTINCT conversation.conversationId, conversationName, "
-				+ "getNotiCount(conversation.conversationId) AS notiCount, "
-				+ "messageId, `type`, content, `datetime`, mes.username, `read` "
-				+ "FROM (SELECT conversationId, username FROM conversation "
-				+ "WHERE conversationId IN "
+				+ "getNotiCount(conversation.conversationId, ?) AS notiCount, "
+				+ "messageId, `type`, content, `datetime`, mes.username "
+				+ "FROM (SELECT conversationId, username FROM conversation " + "WHERE conversationId IN "
 				+ "(SELECT conversationId FROM "
 				+ "(SELECT conversationId, COUNT(1) AS c FROM conversation GROUP BY conversationId) "
 				+ "AS temp WHERE temp.c = 2 ) ) AS conversation "
 				+ "INNER JOIN conversation_setting ON conversation.conversationId = conversation_setting.conversationId "
-				+ "LEFT JOIN (SELECT conversationId, messageId, content, `type`, username, `datetime`, `read` "
+				+ "LEFT JOIN (SELECT conversationId, messageId, content, `type`, username, `datetime` "
 				+ "FROM message WHERE messageId IN (SELECT MAX(messageId) as id "
 				+ "FROM message GROUP BY conversationId)) AS mes ON conversation.conversationId = mes.conversationId "
 				+ "WHERE conversation.username = ?";
-		List<Conversation> list = jdbcTemplate.query(sql, new Object[] { username }, new ConversationMapper());
+		List<Conversation> list = jdbcTemplate.query(sql, new Object[] { username, username },
+				new ConversationMapper());
 		list.stream().forEach(c -> c.setListUser(getUserOfConversation(c.getConversationId())));
 
 		return list;
