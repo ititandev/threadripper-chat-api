@@ -208,4 +208,18 @@ public class ChatDAO {
 		return jdbcTemplate.update(sql, conversationId);
 	}
 
+	public List<Conversation> getFriend(String username) {
+		String sql = "SELECT DISTINCT conversation.conversationId, conversationName, "
+				+ "getNotiCount(conversation.conversationId) AS notiCount, messageId, `type`, "
+				+ "content, `datetime`, mes.username, `read` FROM conversation INNER JOIN conversation_setting "
+				+ "ON conversation.conversationId = conversation_setting.conversationId LEFT JOIN "
+				+ "(SELECT conversationId, messageId, content, `type`, username, `datetime`, `read` "
+				+ "FROM message WHERE messageId IN (SELECT MAX(messageId) as id FROM message GROUP BY conversationId)) AS mes "
+				+ "ON conversation.conversationId = mes.conversationId WHERE conversation.username = ?";
+		List<Conversation> list = jdbcTemplate.query(sql, new Object[] { username }, new ConversationMapper());
+		list.stream().forEach(c -> c.setListUser(getUserOfConversation(c.getConversationId())));
+
+		return list;
+	}
+
 }

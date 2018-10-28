@@ -54,6 +54,7 @@ public class WebsocketController {
 		case MessageType.TEXT:
 		case MessageType.IMAGE:
 		case MessageType.FILE:
+		case MessageType.CALL:
 			revMessage = chatDAO.insertMessage(mes);
 			Message temp = revMessage;
 			revUser = chatDAO.getRevUser(username, revMessage.getConversationId());

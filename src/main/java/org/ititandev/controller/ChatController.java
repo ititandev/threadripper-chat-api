@@ -37,6 +37,11 @@ public class ChatController {
 	public List<Conversation> getConversation(Authentication auth) {
 		return chatDAO.getConversation(auth.getName());
 	}
+	
+	@GetMapping("/api/friend")
+	public List<Conversation> getFriend(Authentication auth) {
+		return chatDAO.getFriend(auth.getName());
+	}
 
 	@GetMapping("/api/conversation/{conversationId}")
 	public Conversation getConversationWithId(Authentication auth,
