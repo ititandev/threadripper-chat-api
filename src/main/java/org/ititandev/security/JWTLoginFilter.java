@@ -1,6 +1,7 @@
 package org.ititandev.security;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -70,7 +71,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 		response.put("user", currentUser);
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		res.getOutputStream().print(objectMapper.writeValueAsString(response));
+		res.getOutputStream().write(objectMapper.writeValueAsString(response).getBytes("UTF-8"));
 	}
 
 }
