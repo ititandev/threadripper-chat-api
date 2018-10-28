@@ -171,7 +171,13 @@ input:  token in Authorization header
         }
     ]
 ```
-### `GET /api/user?search=&offset=?&limit=?`
+### `GET /api/user?search=&offset=&limit=`
+
+
+### `PUT /api/displayName?newDisplayName=`
+```json
+    "success": true
+```
 
 ### `POST /api/conversation`
 ```json

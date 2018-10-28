@@ -59,7 +59,7 @@ public class ChatController {
 		}
 
 		if (chatDAO.deleteConversation(conversationId) > 0)
-			return "{\"result\": \"success\"}";
+			return "{\"success\": true}";
 		else {
 			res.sendError(520, "Some error has occurred");
 			return null;

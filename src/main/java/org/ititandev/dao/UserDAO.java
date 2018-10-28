@@ -154,4 +154,9 @@ public class UserDAO {
 		String sql = "UPDATE avatar SET avatarUrl = ? WHERE avatar_id = ?";
 		return jdbcTemplate.update(sql, avatarUrl, avatarId);
 	}
+
+	public int updateDisplayName(String username, String newDisplayName) {
+		String sql = "UPDATE user SET displayName = ? WHERE username = ?";
+		return jdbcTemplate.update(sql, newDisplayName, username);
+	}
 }

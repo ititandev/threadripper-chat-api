@@ -77,9 +77,10 @@ public class UserController {
 			return null;
 		}
 		if (result == 1) {
-//			String verify = userDAO.getVerifyLink(username);
-//			String to = userDAO.getEmail(username);
-//			MailService.sendMail(to, "Threadripper: Verify account", verifyBody.replace("{{action_url}}", verify));
+			// String verify = userDAO.getVerifyLink(username);
+			// String to = userDAO.getEmail(username);
+			// MailService.sendMail(to, "Threadripper: Verify account",
+			// verifyBody.replace("{{action_url}}", verify));
 			return "{\"success\": true}";
 		} else
 			response.sendError(520, "Some error has occurred");
@@ -114,7 +115,7 @@ public class UserController {
 		String verify = userDAO.getVerifyLink(username);
 		String email = userDAO.getEmail(username);
 		MailService.sendMail(email, "Threadripper: Verify account", verifyBody.replace("{{action_url}}", verify));
-		return "{\"result\": \"success\"}";
+		return "{\"success\": true}";
 	}
 
 	@GetMapping("/api/verify/{username}/{hash}")
@@ -138,7 +139,7 @@ public class UserController {
 		userDAO.updatePassword(username, passwordEncoder.encode(newPassword));
 		MailService.sendMail(userDAO.getEmail(username), "Threadripper: Forgot password",
 				forgotBody.replace("{{newpass}}", newPassword));
-		return "{\"result\": \"success\", \"newPassword\": " + newPassword + "}";
+		return "{\"success\": true, \"newPassword\": " + newPassword + "}";
 	}
 
 	@PutMapping("/api/password")
@@ -152,7 +153,7 @@ public class UserController {
 		}
 		int code = userDAO.updatePassword(username, newPassword);
 		if (code == 1) {
-			return "{\"result\":\"success\"}";
+			return "{\"success\": true}";
 		} else {
 			response.sendError(520, "Some error has occurred");
 			return null;
@@ -191,8 +192,21 @@ public class UserController {
 	public List<UserSearch> searchUser(@RequestParam("search") String keyword) {
 		return userDAO.searchUser(keyword, 0, 20);
 	}
-	@GetMapping(value = "/api/user", params = {"search", "offset", "limit"})
-	public List<UserSearch> searchUserLimit(@RequestParam("search") String keyword, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+
+	@GetMapping(value = "/api/user", params = { "search", "offset", "limit" })
+	public List<UserSearch> searchUserLimit(@RequestParam("search") String keyword, @RequestParam("offset") int offset,
+			@RequestParam("limit") int limit) {
 		return userDAO.searchUser(keyword, offset, limit);
+	}
+
+	@PutMapping("/api/displayName")
+	public Object updateDisplayName(@RequestParam("newDisplayName") String newDisplayName, Authentication auth,
+			HttpServletResponse res) throws IOException {
+		if (userDAO.updateDisplayName(auth.getName(), newDisplayName) == 1)
+			return "{\"success\": true}";
+		else {
+			res.sendError(520, "Some error has occurred");
+			return null;
+		}
 	}
 }
