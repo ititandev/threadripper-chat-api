@@ -204,54 +204,31 @@ input: token in Authorization header
 ```
 
 ```json
-[   
-    {
-        "conversationId": "2",
-        "conversationName": null,
-        "lastMessage": {
-            "messageId": "2",
-            "type": "TEXT",
-            "content": "2",
-            "datetime": "2018-10-19",
-            "conversationId": "2",
-            "username": "b",
-            "read": false
-        },
-        "listUser": [
-            {
-                "displayName": "displayD",
-                "username": "a",
-                "nickname": null,
-                "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
-                "online": false
-            },
-            {
-                "displayName": "b",
-                "username": "c",
-                "nickname": null,
-                "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
-                "online": false
-            }
-        ],
-        "notiCount": 1
-    },
+[
     {
         "conversationId": "3",
-        "conversationName": null,
+        "conversationName": "NameOfABC",
         "lastMessage": null,
         "listUser": [
             {
-                "displayName": "displayD",
+                "displayName": "userA",
                 "username": "a",
                 "nickname": null,
-                "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
+                "avatarUrl": "vre.hcmut.edu.vn/threadripper/api/avatar/default.jpg",
                 "online": false
             },
             {
-                "displayName": "b",
-                "username": "d",
+                "displayName": "userB",
+                "username": "b",
                 "nickname": null,
-                "avatarUrl": "http://localhost:8083/api/avatar/default.jpg",
+                "avatarUrl": "vre.hcmut.edu.vn/threadripper/api/avatar/default.jpg",
+                "online": false
+            },
+            {
+                "displayName": "userC",
+                "username": "c",
+                "nickname": null,
+                "avatarUrl": "vre.hcmut.edu.vn/threadripper/api/avatar/default.jpg",
                 "online": false
             }
         ],
