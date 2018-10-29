@@ -9,6 +9,15 @@ public class Message {
 	String conversationId;
 	String username;
 	String token;
+	String payload;
+
+	public String getPayload() {
+		return payload;
+	}
+
+	public void setPayload(String payload) {
+		this.payload = payload;
+	}
 
 	public String getToken() {
 		return token;
