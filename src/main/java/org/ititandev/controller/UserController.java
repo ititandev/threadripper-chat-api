@@ -198,6 +198,16 @@ public class UserController {
 			@RequestParam("limit") int limit) {
 		return userDAO.searchUser(keyword, offset, limit);
 	}
+	
+	@GetMapping("/api/user/{username}")
+	public UserSearch getUserByUsername(@PathVariable("username") String username, HttpServletResponse res) throws IOException {
+		System.out.println(username);
+		List<UserSearch> result = userDAO.getUserByUsername(username);
+		if (result.size() == 1)
+			return result.get(0);
+		res.sendError(404, "User doesn't exist");
+		return null;
+	}
 
 	@PutMapping("/api/displayName")
 	public Object updateDisplayName(@RequestParam("newDisplayName") String newDisplayName, Authentication auth,

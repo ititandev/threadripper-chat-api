@@ -117,17 +117,16 @@ public class UserDAO {
 	}
 
 	public List<UserSearch> searchUser(String keyword, int offset, int limit) {
-		String sql = "SELECT user.username, displayName, email, " + "getAvatar(user.username) AS avatarUrl, online "
+		String sql = "SELECT user.username, displayName, email, getAvatar(user.username) AS avatarUrl, online "
 				+ "FROM user WHERE (user.username LIKE '%" + keyword + "%' OR " + "email LIKE '%" + keyword
 				+ "%' OR displayName LIKE '%" + keyword + "%') LIMIT ?, ?";
 		return jdbcTemplate.query(sql, new Object[] { offset, limit }, new UserSearchMapper());
 	}
 
-	public Boolean addFriend(String currentUser, String username) {
-		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("set_follow");
-		SqlParameterSource in = new MapSqlParameterSource().addValue("user1", currentUser).addValue("user2", username);
-		Map<String, Object> out = jdbcCall.execute(in);
-		return Boolean.valueOf(out.get("output").toString());
+	public List<UserSearch> getUserByUsername(String username) {
+		String sql = "SELECT user.username, displayName, email, getAvatar(user.username) AS avatarUrl, online "
+				+ "FROM user WHERE user.username = ?";
+		return jdbcTemplate.query(sql, new Object[] { username }, new UserSearchMapper());
 	}
 
 	public List<UserReg> getUserList() {
@@ -159,4 +158,5 @@ public class UserDAO {
 		String sql = "UPDATE user SET displayName = ? WHERE username = ?";
 		return jdbcTemplate.update(sql, newDisplayName, username);
 	}
+
 }

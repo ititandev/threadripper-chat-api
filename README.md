@@ -169,7 +169,27 @@ input:  token in Authorization header
     ]
 ```
 ### `GET /api/user?search=&offset=&limit=`
-
+### `GET /api/user/{username}
+```
+input:  token in Authorization header
+```
+```json
+->  {
+        "username": "a",
+        "displayName": "userA",
+        "email": "1611985@hcmut.edu.vn",
+        "avatarUrl": "vre.hcmut.edu.vn/threadripper/api/avatar/default.jpg",
+        "online": false
+    }
+    
+->  {
+        "timestamp": 1540779604010,
+        "status": 404,
+        "error": "Not Found",
+        "message": "User doesn't exist",
+        "path": "/api/user/e"
+    }
+```
 
 ### `PUT /api/displayName?newDisplayName=`
 ```json
