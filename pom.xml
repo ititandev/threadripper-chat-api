@@ -5,7 +5,7 @@
 	
 	<!--<groupId>org.ititandev</groupId> -->
 	<groupId>org.ititandev</groupId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>spring-security-jwt-rest-demo</name>

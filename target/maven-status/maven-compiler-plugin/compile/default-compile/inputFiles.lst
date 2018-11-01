@@ -9,6 +9,7 @@ C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititan
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\config\Config.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\security\JWTAuthenticationFilter.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\service\MailService.java
+C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\model\MessageType.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\controller\ChatController.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\mapper\ConversationMapper.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\Application.java
@@ -17,7 +18,6 @@ C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititan
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\security\JWTLoginFilter.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\mapper\UserMapper.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\controller\DownloadController.java
-C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\controller\ProfileController.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\model\UserReg.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\model\UserSearch.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\controller\WebSocketEventListener.java
@@ -25,6 +25,7 @@ C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititan
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\controller\test.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\security\TokenHandler.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\dao\UserDAO.java
+C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\mapper\StringMapper.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\dao\ChatDAO.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\security\JWTAuthenticationEntryPoint.java
 C:\Users\ITitan\eclipse-workspace\threadripper-chat-api\src\main\java\org\ititandev\service\TokenAuthenticationService.java
