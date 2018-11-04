@@ -46,7 +46,8 @@ public class Message {
 	@Override
 	public String toString() {
 		return "Message [messageId=" + messageId + ", type=" + type + ", content=" + content + ", datetime=" + datetime
-				+ ", conversationId=" + conversationId + ", username=" + username + ", token=" + token + "]";
+				+ ", conversationId=" + conversationId + ", username=" + username + ", token=" + token + ", payload="
+				+ payload + "]";
 	}
 
 	public String getDatetime() {
