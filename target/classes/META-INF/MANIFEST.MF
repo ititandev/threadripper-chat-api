@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Implementation-Title: spring-security-jwt-rest-demo
-Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Version: 1.0.0
 Built-By: ITitan
 Implementation-Vendor-Id: org.ititandev
 Build-Jdk: 1.8.0_181

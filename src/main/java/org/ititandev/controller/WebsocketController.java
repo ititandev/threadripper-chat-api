@@ -14,6 +14,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -67,13 +68,19 @@ public class WebsocketController {
 		case MessageType.READ:
 			revUser = chatDAO.getRevUser(username, revMessage.getConversationId());
 			chatDAO.markAsRead(mes.getConversationId(), username, mes.getContent());
-			
+
 			revUser.forEach(u -> messagingTemplate.convertAndSend("/topic/" + u, mes));
 			break;
 		case MessageType.TYPING:
 			revUser = chatDAO.getRevUser(username, revMessage.getConversationId());
 			revUser.forEach(u -> messagingTemplate.convertAndSend("/topic/" + u, mes));
 			break;
+
+		case MessageType.LEAVE:
+			revUser = chatDAO.getRevUserJoin(username, 0);
+			revUser.forEach(u -> messagingTemplate.convertAndSend("/topic/" + u, mes));
+			break;
+			
 
 		default:
 			messagingTemplate.convertAndSend("/topic/" + username, "{\"error\": \"Unknown type\"}");
