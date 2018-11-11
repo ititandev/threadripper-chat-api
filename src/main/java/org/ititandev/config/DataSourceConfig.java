@@ -15,8 +15,8 @@ public class DataSourceConfig {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url("jdbc:mysql://127.0.0.1:3306/threadripper?useUnicode=yes&characterEncoding=UTF-8");
         dataSourceBuilder.driverClassName("com.mysql.jdbc.Driver");
-        dataSourceBuilder.username(Config.getConfig("mysql.username"));
-        dataSourceBuilder.password(Config.getConfig("mysql.password"));
+        dataSourceBuilder.username("ititan");
+        dataSourceBuilder.password("GTX980TiITitan!");
         return dataSourceBuilder.build();
     }
 }
