@@ -36,12 +36,14 @@ public class Config {
 	public static String getProperty(String key) {
 		if (instance == null)
 			instance = new Config();
+		System.out.print(key + ": " + instance._getProperty(key));
 		return instance._getProperty(key);
 	}
 
 	public static String getConfig(String key) {
 		if (instance == null)
 			instance = new Config();
+		System.out.print(key + ": " + instance._getConfig(key));
 		return instance._getConfig(key);
 	}
 }

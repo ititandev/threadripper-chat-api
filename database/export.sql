@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `avatar`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `avatar` (
-  `avatar_id` int(11) NOT NULL AUTO_INCREMENT,
+  `avatar_id` int(11) NOT NULL AUTO_INCREMENT,  
   `avatarUrl` varchar(300) DEFAULT NULL,
   `username` varchar(50) NOT NULL,
   `datetime` datetime DEFAULT NULL,
@@ -217,7 +217,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `getAvatar`(u varchar(50)) RETURNS varchar(300) CHARSET utf8
+CREATE DEFINER=`ititan`@`localhost` FUNCTION `getAvatar`(u varchar(50)) RETURNS varchar(300) CHARSET utf8
     DETERMINISTIC
 BEGIN
 	DECLARE var VARCHAR(300); 
@@ -241,7 +241,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `getNotiCount`(convId INTEGER, usern VARCHAR(50)) RETURNS int(11)
+CREATE DEFINER=`ititan`@`localhost` FUNCTION `getNotiCount`(convId INTEGER, usern VARCHAR(50)) RETURNS int(11)
     DETERMINISTIC
 BEGIN
 	DECLARE var INTEGER; 
