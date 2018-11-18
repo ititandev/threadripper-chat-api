@@ -459,18 +459,3 @@ param:
     "fileUrl": "http://localhost:8083/api/file/10.exe"
 }
 ```
-
-
-
-# TO DO:
-
-
-
-GET /api/verify?username= &hash=
-
-GET /api/forget?username=
-    -> newPassword
-
-
-
-
